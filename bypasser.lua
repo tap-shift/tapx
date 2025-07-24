@@ -12,6 +12,7 @@ local originalWords = {
     ["dick"] = 6,
     ["pussy"] = 7,
     ["sex"] = 8,
+    ["dumbass"] = 9,
     -- Add more words here: ["word"] = ID
 }
 
@@ -26,6 +27,7 @@ local bypassedVersions = {
     [6] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
     [7] = "⌝pษʂִִִʂִִִy⌝",
     [8] = "⌝ʂִִִexִִׇﹺ⌝",
+    [9] = "⌝dษmbαִִִʂִִִʂִִִ⌝",
     -- Add more bypassed versions here: [ID] = "bypassed_text"
 }
 
