@@ -8,6 +8,7 @@ local originalWords = {
     ["ass"] = 3,
     ["discord"] = 4,
     ["nigga"] = 5,
+    ["dick"] = 6,
     -- Add more words here: ["word"] = ID
 }
 
@@ -18,6 +19,7 @@ local bypassedVersions = {
     [3] = "å§§",
     [4] = "⌝dỈִִִธcorִִִd⌝",
     [5] = "⌝fษcׂׂׂk⌝",
+    [6] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
     -- Add more bypassed versions here: [ID] = "bypassed_text"
 }
 
