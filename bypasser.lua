@@ -4,7 +4,7 @@ local Bypasser = {}
 -- Combined bypass dictionary
 local bypassDictionary = {
     ["test"] = "this word got patched. Please try bypassing a different word.",
-    ["fuck"] = "⌝fษcׂׂׂk⌝",
+    ["fuck"] = "⌝fมcׂׂׂᴋִִִ⌝",
     ["shit"] = "⌝ธhῘtִִִ⌝",
     ["ass"] = "⌝αִִִʂִִִʂִִִ⌝",
     ["discord"] = "⌝dỈִִִธcorִִִd⌝",
@@ -13,6 +13,11 @@ local bypassDictionary = {
     ["pussy"] = "⌝pษʂִִִʂִִִy⌝",
     ["sex"] = "⌝ʂִִִexִִׇﹺ⌝",
     ["dumbass"] = "⌝dษmbαִִִʂִִִʂִִִ⌝",
+    ["pussy"] = "⌝pมธธy⌝",
+    ["cum"] = "⌝cׂׂׂมmִִִ⌝",
+    ["penis"] = "⌝peⴖῘִִִʂִִִ⌝",
+    ["boobs"] = "⌝ḅִ︭oobʂִִִ⌝",
+    ["bitch"] = "⌝ḅִ︭Ỉִִִtcׂׂׂḥִ︭⌝",
     -- Add more entries as: ["word"] = "bypassed_version"
 }
 
