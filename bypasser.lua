@@ -10,7 +10,6 @@ local bypassDictionary = {
     ["discord"] = "⌝dỈִִִธcorִִִd⌝",
     ["nigga"] = "this word got patched. Please try bypassing a different word.",
     ["dick"] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
-    ["pussy"] = "⌝pษʂִִִʂִִִy⌝",
     ["sex"] = "⌝ʂִִִexִִׇﹺ⌝",
     ["dumbass"] = "⌝dษmbαִִִʂִִִʂִִִ⌝",
     ["pussy"] = "⌝pมธธy⌝",
