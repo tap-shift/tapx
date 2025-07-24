@@ -10,7 +10,7 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Notification function
+-- Notification function (unchanged)
 local function showNotification(text)
     local notif = Instance.new("Frame")
     notif.Name = "Notification"
@@ -47,113 +47,142 @@ local function showNotification(text)
     end)
 end
 
--- Main frame
+-- New modern frame design
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-mainFrame.Size = UDim2.new(0, 350, 0, 450)
-mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-mainFrame.BackgroundTransparency = 0.1
+mainFrame.Size = UDim2.new(0, 380, 0, 500) -- Slightly larger
+mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+mainFrame.BackgroundTransparency = 0.05
 mainFrame.BorderSizePixel = 0
 mainFrame.ClipsDescendants = true
 mainFrame.Parent = gui
+
+-- Glass morphism effect
+local backgroundBlur = Instance.new("Frame")
+backgroundBlur.Name = "BackgroundBlur"
+backgroundBlur.Size = UDim2.new(1, 0, 1, 0)
+backgroundBlur.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+backgroundBlur.BackgroundTransparency = 0.3
+backgroundBlur.ZIndex = -1
+backgroundBlur.Parent = mainFrame
+
+local blurCorner = Instance.new("UICorner")
+blurCorner.CornerRadius = UDim.new(0, 12)
+blurCorner.Parent = backgroundBlur
+
+-- Main content frame
+local contentFrame = Instance.new("Frame")
+contentFrame.Name = "ContentFrame"
+contentFrame.Size = UDim2.new(1, 0, 1, 0)
+contentFrame.BackgroundTransparency = 1
+contentFrame.Parent = mainFrame
 
 -- Rounded corners
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 12)
 corner.Parent = mainFrame
 
--- Drop shadow
-local shadow = Instance.new("ImageLabel")
-shadow.Name = "Shadow"
-shadow.AnchorPoint = Vector2.new(0.5, 0.5)
-shadow.Position = UDim2.new(0.5, 0, 0.5, 5)
-shadow.Size = UDim2.new(1, 20, 1, 20)
-shadow.BackgroundTransparency = 1
-shadow.Image = "rbxassetid://1316045217"
-shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
-shadow.ImageTransparency = 0.8
-shadow.ScaleType = Enum.ScaleType.Slice
-shadow.SliceCenter = Rect.new(10, 10, 118, 118)
-shadow.Parent = mainFrame
-shadow.ZIndex = -1
+-- Glow effect
+local glow = Instance.new("ImageLabel")
+glow.Name = "Glow"
+glow.AnchorPoint = Vector2.new(0.5, 0.5)
+glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+glow.Size = UDim2.new(1, 40, 1, 40)
+glow.BackgroundTransparency = 1
+glow.Image = "rbxassetid://5028857084"
+glow.ImageColor3 = Color3.fromRGB(80, 120, 200)
+glow.ImageTransparency = 0.8
+glow.ScaleType = Enum.ScaleType.Slice
+glow.SliceCenter = Rect.new(24, 24, 276, 276)
+glow.Parent = mainFrame
+glow.ZIndex = -1
 
--- Title bar (draggable area)
-local titleBar = Instance.new("Frame")
-titleBar.Name = "TitleBar"
-titleBar.Size = UDim2.new(1, 0, 0, 40)
-titleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-titleBar.BorderSizePixel = 0
-titleBar.Parent = mainFrame
+-- Header section
+local header = Instance.new("Frame")
+header.Name = "Header"
+header.Size = UDim2.new(1, 0, 0, 50)
+header.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+header.BorderSizePixel = 0
+header.Parent = contentFrame
 
--- Title container to hold both title and version
+local headerCorner = Instance.new("UICorner")
+headerCorner.CornerRadius = UDim.new(0, 12)
+headerCorner.Parent = header
+
+-- Title with version
 local titleContainer = Instance.new("Frame")
 titleContainer.Name = "TitleContainer"
-titleContainer.Position = UDim2.new(0, 15, 0, 0)
-titleContainer.Size = UDim2.new(1, -50, 1, 0)
+titleContainer.Position = UDim2.new(0, 20, 0, 0)
+titleContainer.Size = UDim2.new(0.6, 0, 1, 0)
 titleContainer.BackgroundTransparency = 1
-titleContainer.Parent = titleBar
+titleContainer.Parent = header
 
--- Title text
 local title = Instance.new("TextLabel")
 title.Name = "Title"
-title.Position = UDim2.new(0, 0, 0, 0)
 title.Size = UDim2.new(0, 0, 1, 0)
 title.AutomaticSize = Enum.AutomaticSize.X
 title.BackgroundTransparency = 1
 title.Text = "TAPX BYPASSER"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.TextSize = 18
+title.TextSize = 20
 title.Font = Enum.Font.GothamBold
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = titleContainer
 
--- Version stamp (right next to title)
 local version = Instance.new("TextLabel")
 version.Name = "Version"
-version.Position = UDim2.new(0, title.TextBounds.X + 30, 0, 0)
+version.Position = UDim2.new(0, title.TextBounds.X + 8, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
 version.Text = "v1.0"
 version.TextColor3 = Color3.fromRGB(180, 180, 180)
-version.TextSize = 14
+version.TextSize = 16
 version.Font = Enum.Font.Gotham
 version.TextXAlignment = Enum.TextXAlignment.Left
 version.Parent = titleContainer
 
 -- Close button
-local closeButton = Instance.new("TextButton")
+local closeButton = Instance.new("ImageButton")
 closeButton.Name = "CloseButton"
 closeButton.AnchorPoint = Vector2.new(1, 0.5)
-closeButton.Position = UDim2.new(1, -10, 0.5, 0)
-closeButton.Size = UDim2.new(0, 20, 0, 20)
+closeButton.Position = UDim2.new(1, -15, 0.5, 0)
+closeButton.Size = UDim2.new(0, 24, 0, 24)
 closeButton.BackgroundTransparency = 1
-closeButton.Text = "×"
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.TextSize = 20
-closeButton.Font = Enum.Font.GothamBold
-closeButton.Parent = titleBar
+closeButton.Image = "rbxassetid://3926305904"
+closeButton.ImageRectOffset = Vector2.new(284, 4)
+closeButton.ImageRectSize = Vector2.new(24, 24)
+closeButton.ImageColor3 = Color3.fromRGB(200, 200, 200)
+closeButton.Parent = header
 
--- Input frame
-local inputFrame = Instance.new("Frame")
-inputFrame.Name = "InputFrame"
-inputFrame.Position = UDim2.new(0, 15, 0, 50)
-inputFrame.Size = UDim2.new(1, -30, 0, 120)
-inputFrame.BackgroundTransparency = 1
-inputFrame.Parent = mainFrame
+-- Main content area
+local contentArea = Instance.new("Frame")
+contentArea.Name = "ContentArea"
+contentArea.Position = UDim2.new(0, 0, 0, 50)
+contentArea.Size = UDim2.new(1, 0, 1, -50)
+contentArea.BackgroundTransparency = 1
+contentArea.Parent = contentFrame
+
+-- Input section
+local inputSection = Instance.new("Frame")
+inputSection.Name = "InputSection"
+inputSection.Position = UDim2.new(0, 20, 0, 20)
+inputSection.Size = UDim2.new(1, -40, 0, 150)
+inputSection.BackgroundTransparency = 1
+inputSection.Parent = contentArea
 
 local inputLabel = Instance.new("TextLabel")
 inputLabel.Name = "InputLabel"
 inputLabel.Size = UDim2.new(1, 0, 0, 20)
 inputLabel.BackgroundTransparency = 1
-inputLabel.Text = "INPUT TEXT:"
+inputLabel.Text = "INPUT TEXT"
 inputLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 inputLabel.TextSize = 14
-inputLabel.Font = Enum.Font.Gotham
+inputLabel.Font = Enum.Font.GothamMedium
 inputLabel.TextXAlignment = Enum.TextXAlignment.Left
-inputLabel.Parent = inputFrame
+inputLabel.Parent = inputSection
 
 local inputBox = Instance.new("TextBox")
 inputBox.Name = "InputBox"
@@ -167,37 +196,37 @@ inputBox.TextWrapped = true
 inputBox.TextXAlignment = Enum.TextXAlignment.Left
 inputBox.TextYAlignment = Enum.TextYAlignment.Top
 inputBox.PlaceholderText = "Type text to bypass here..."
-inputBox.Parent = inputFrame
+inputBox.Parent = inputSection
 
 local inputCorner = Instance.new("UICorner")
 inputCorner.CornerRadius = UDim.new(0, 8)
 inputCorner.Parent = inputBox
 
 local inputPadding = Instance.new("UIPadding")
-inputPadding.PaddingLeft = UDim.new(0, 8)
-inputPadding.PaddingRight = UDim.new(0, 8)
-inputPadding.PaddingTop = UDim.new(0, 8)
-inputPadding.PaddingBottom = UDim.new(0, 8)
+inputPadding.PaddingLeft = UDim.new(0, 10)
+inputPadding.PaddingRight = UDim.new(0, 10)
+inputPadding.PaddingTop = UDim.new(0, 10)
+inputPadding.PaddingBottom = UDim.new(0, 10)
 inputPadding.Parent = inputBox
 
--- Output frame
-local outputFrame = Instance.new("Frame")
-outputFrame.Name = "OutputFrame"
-outputFrame.Position = UDim2.new(0, 15, 0, 190)
-outputFrame.Size = UDim2.new(1, -30, 0, 120)
-outputFrame.BackgroundTransparency = 1
-outputFrame.Parent = mainFrame
+-- Output section
+local outputSection = Instance.new("Frame")
+outputSection.Name = "OutputSection"
+outputSection.Position = UDim2.new(0, 20, 0, 190)
+outputSection.Size = UDim2.new(1, -40, 0, 150)
+outputSection.BackgroundTransparency = 1
+outputSection.Parent = contentArea
 
 local outputLabel = Instance.new("TextLabel")
 outputLabel.Name = "OutputLabel"
 outputLabel.Size = UDim2.new(1, 0, 0, 20)
 outputLabel.BackgroundTransparency = 1
-outputLabel.Text = "BYPASSED TEXT:"
+outputLabel.Text = "BYPASSED TEXT"
 outputLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
 outputLabel.TextSize = 14
-outputLabel.Font = Enum.Font.Gotham
+outputLabel.Font = Enum.Font.GothamMedium
 outputLabel.TextXAlignment = Enum.TextXAlignment.Left
-outputLabel.Parent = outputFrame
+outputLabel.Parent = outputSection
 
 local outputBox = Instance.new("TextLabel")
 outputBox.Name = "OutputBox"
@@ -211,26 +240,26 @@ outputBox.TextWrapped = true
 outputBox.TextXAlignment = Enum.TextXAlignment.Left
 outputBox.TextYAlignment = Enum.TextYAlignment.Top
 outputBox.Text = ""
-outputBox.Parent = outputFrame
+outputBox.Parent = outputSection
 
 local outputCorner = Instance.new("UICorner")
 outputCorner.CornerRadius = UDim.new(0, 8)
 outputCorner.Parent = outputBox
 
 local outputPadding = Instance.new("UIPadding")
-outputPadding.PaddingLeft = UDim.new(0, 8)
-outputPadding.PaddingRight = UDim.new(0, 8)
-outputPadding.PaddingTop = UDim.new(0, 8)
-outputPadding.PaddingBottom = UDim.new(0, 8)
+outputPadding.PaddingLeft = UDim.new(0, 10)
+outputPadding.PaddingRight = UDim.new(0, 10)
+outputPadding.PaddingTop = UDim.new(0, 10)
+outputPadding.PaddingBottom = UDim.new(0, 10)
 outputPadding.Parent = outputBox
 
--- Buttons
-local buttonFrame = Instance.new("Frame")
-buttonFrame.Name = "ButtonFrame"
-buttonFrame.Position = UDim2.new(0, 15, 0, 330)
-buttonFrame.Size = UDim2.new(1, -30, 0, 50)
-buttonFrame.BackgroundTransparency = 1
-buttonFrame.Parent = mainFrame
+-- Action buttons
+local actionButtons = Instance.new("Frame")
+actionButtons.Name = "ActionButtons"
+actionButtons.Position = UDim2.new(0, 20, 0, 360)
+actionButtons.Size = UDim2.new(1, -40, 0, 50)
+actionButtons.BackgroundTransparency = 1
+actionButtons.Parent = contentArea
 
 local bypassButton = Instance.new("TextButton")
 bypassButton.Name = "BypassButton"
@@ -240,7 +269,7 @@ bypassButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 bypassButton.Text = "BYPASS"
 bypassButton.TextSize = 14
 bypassButton.Font = Enum.Font.GothamBold
-bypassButton.Parent = buttonFrame
+bypassButton.Parent = actionButtons
 
 local copyButton = Instance.new("TextButton")
 copyButton.Name = "CopyButton"
@@ -251,25 +280,25 @@ copyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 copyButton.Text = "COPY"
 copyButton.TextSize = 14
 copyButton.Font = Enum.Font.GothamBold
-copyButton.Parent = buttonFrame
+copyButton.Parent = actionButtons
 
 -- Add corner radius to buttons
 local buttonCorner = Instance.new("UICorner")
-buttonCorner.CornerRadius = UDim.new(0, 8)
+buttonCorner.CornerRadius = UDim.new(0, 6)
 buttonCorner.Parent = bypassButton
 buttonCorner:Clone().Parent = copyButton
 
 -- Discord button
 local discordButton = Instance.new("TextButton")
 discordButton.Name = "DiscordButton"
-discordButton.Position = UDim2.new(0, 15, 0, 390)
-discordButton.Size = UDim2.new(1, -30, 0, 30)
+discordButton.Position = UDim2.new(0, 20, 0, 420)
+discordButton.Size = UDim2.new(1, -40, 0, 30)
 discordButton.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
 discordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-discordButton.Text = "Join Our Discord (Click to Copy)"
+discordButton.Text = "JOIN OUR DISCORD"
 discordButton.TextSize = 14
 discordButton.Font = Enum.Font.GothamBold
-discordButton.Parent = mainFrame
+discordButton.Parent = contentArea
 
 local discordCorner = Instance.new("UICorner")
 discordCorner.CornerRadius = UDim.new(0, 6)
@@ -277,12 +306,12 @@ discordCorner.Parent = discordButton
 
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.85, 0, 0, 450)
-    inputBox.TextSize = 14
-    outputBox.TextSize = 14
-    bypassButton.TextSize = 14
-    copyButton.TextSize = 14
-    discordButton.TextSize = 13
+    mainFrame.Size = UDim2.new(0.9, 0, 0, 500)
+    inputBox.TextSize = 16
+    outputBox.TextSize = 16
+    bypassButton.TextSize = 16
+    copyButton.TextSize = 16
+    discordButton.TextSize = 15
 end
 
 -- Dragging functionality
@@ -301,7 +330,7 @@ local function updateInput(input)
     )
 end
 
-titleBar.InputBegan:Connect(function(input)
+header.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 or 
        input.UserInputType == Enum.UserInputType.Touch then
         dragging = true
@@ -318,7 +347,7 @@ titleBar.InputBegan:Connect(function(input)
     end
 end)
 
-titleBar.InputChanged:Connect(function(input)
+header.InputChanged:Connect(function(input)
     if (input.UserInputType == Enum.UserInputType.MouseMovement or 
         input.UserInputType == Enum.UserInputType.Touch) and dragging then
         updateInput(input)
