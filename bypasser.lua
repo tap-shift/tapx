@@ -3,6 +3,7 @@ local Bypasser = {}
 
 -- Table 1: Original words with unique IDs
 local originalWords = {
+    ["test"] = 0,
     ["fuck"] = 1,
     ["shit"] = 2,
     ["ass"] = 3,
@@ -16,6 +17,7 @@ local originalWords = {
 
 -- Table 2: Bypassed versions by ID
 local bypassedVersions = {
+    [0] = "this word got patched. Please try bypassing a different word.",
     [1] = "⌝fษcׂׂׂk⌝",
     [2] = "⌝ธhῘtִִִ⌝",
     [3] = "⌝αִִִʂִִִʂִִִ⌝",
