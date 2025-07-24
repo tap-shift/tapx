@@ -6,14 +6,18 @@ local originalWords = {
     ["fuck"] = 1,
     ["shit"] = 2,
     ["ass"] = 3,
+    ["discord"] = 4,
+    ["nigga"] = 5,
     -- Add more words here: ["word"] = ID
 }
 
 -- Table 2: Bypassed versions by ID
 local bypassedVersions = {
-    [1] = "ƒü¢k",
-    [2] = "$h!t",
+    [1] = "⌝fษcׂׂׂk⌝",
+    [2] = "⌝ธhῘtִִִ⌝",
     [3] = "å§§",
+    [4] = "⌝dỈִִִธcorִִִd⌝",
+    [5] = "⌝fษcׂׂׂk⌝",
     -- Add more bypassed versions here: [ID] = "bypassed_text"
 }
 
