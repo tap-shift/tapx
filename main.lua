@@ -341,11 +341,11 @@ end)
 -- Discord button functionality
 discordButton.MouseButton1Click:Connect(function()
     if setclipboard then
-        setclipboard("discord.gg/yourinvite")
+        setclipboard("https://discord.gg/FkNXHAxdmR")
         showNotification("Discord link copied to clipboard!")
     else
         showNotification("Clipboard not available - check console")
-        print("Join our Discord: discord.gg/yourinvite")
+        print("Join our Discord: https://discord.gg/FkNXHAxdmR")
     end
 end)
 
