@@ -1,34 +1,19 @@
 --!strict
 local Bypasser = {}
 
--- Table 1: Original words with unique IDs
-local originalWords = {
-    ["test"] = 0,
-    ["fuck"] = 1,
-    ["shit"] = 2,
-    ["ass"] = 3,
-    ["discord"] = 4,
-    ["nigga"] = 5,
-    ["dick"] = 6,
-    ["pussy"] = 7,
-    ["sex"] = 8,
-    ["dumbass"] = 9,
-    -- Add more words here: ["word"] = ID
-}
-
--- Table 2: Bypassed versions by ID
-local bypassedVersions = {
-    [0] = "this word got patched. Please try bypassing a different word.",
-    [1] = "⌝fษcׂׂׂk⌝",
-    [2] = "⌝ธhῘtִִִ⌝",
-    [3] = "⌝αִִִʂִִִʂִִִ⌝",
-    [4] = "⌝dỈִִִธcorִִִd⌝",
-    [5] = "this word got patched. Please try bypassing a different word.",
-    [6] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
-    [7] = "⌝pษʂִִִʂִִִy⌝",
-    [8] = "⌝ʂִִִexִִׇﹺ⌝",
-    [9] = "⌝dษmbαִִִʂִִִʂִִִ⌝",
-    -- Add more bypassed versions here: [ID] = "bypassed_text"
+-- Combined bypass dictionary
+local bypassDictionary = {
+    ["test"] = "this word got patched. Please try bypassing a different word.",
+    ["fuck"] = "⌝fษcׂׂׂk⌝",
+    ["shit"] = "⌝ธhῘtִִִ⌝",
+    ["ass"] = "⌝αִִִʂִִִʂִִִ⌝",
+    ["discord"] = "⌝dỈִִִธcorִִִd⌝",
+    ["nigga"] = "this word got patched. Please try bypassing a different word.",
+    ["dick"] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
+    ["pussy"] = "⌝pษʂִִִʂִִִy⌝",
+    ["sex"] = "⌝ʂִִִexִִׇﹺ⌝",
+    ["dumbass"] = "⌝dษmbαִִִʂִִִʂִִִ⌝",
+    -- Add more entries as: ["word"] = "bypassed_version"
 }
 
 function Bypasser.bypassText(text: string): string
@@ -37,12 +22,7 @@ function Bypasser.bypassText(text: string): string
     
     for _, word in ipairs(words) do
         local lowerWord = string.lower(word)
-        if originalWords[lowerWord] then
-            local id = originalWords[lowerWord]
-            table.insert(result, bypassedVersions[id] or word)
-        else
-            table.insert(result, word)
-        end
+        table.insert(result, bypassDictionary[lowerWord] or word)
     end
     
     return table.concat(result, " ")
