@@ -10,7 +10,7 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Notification function (unchanged)
+-- Notification function
 local function showNotification(text)
     local notif = Instance.new("Frame")
     notif.Name = "Notification"
@@ -47,14 +47,14 @@ local function showNotification(text)
     end)
 end
 
--- New modern frame design
+-- Main frame with increased transparency
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-mainFrame.Size = UDim2.new(0, 380, 0, 500) -- Slightly larger
+mainFrame.Size = UDim2.new(0, 380, 0, 400) -- Reduced height
 mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-mainFrame.BackgroundTransparency = 0.05
+mainFrame.BackgroundTransparency = 0.15 -- More transparent
 mainFrame.BorderSizePixel = 0
 mainFrame.ClipsDescendants = true
 mainFrame.Parent = gui
@@ -64,7 +64,7 @@ local backgroundBlur = Instance.new("Frame")
 backgroundBlur.Name = "BackgroundBlur"
 backgroundBlur.Size = UDim2.new(1, 0, 1, 0)
 backgroundBlur.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-backgroundBlur.BackgroundTransparency = 0.3
+backgroundBlur.BackgroundTransparency = 0.4 -- More transparent
 backgroundBlur.ZIndex = -1
 backgroundBlur.Parent = mainFrame
 
@@ -165,11 +165,11 @@ contentArea.Size = UDim2.new(1, 0, 1, -50)
 contentArea.BackgroundTransparency = 1
 contentArea.Parent = contentFrame
 
--- Input section
+-- Input section (smaller)
 local inputSection = Instance.new("Frame")
 inputSection.Name = "InputSection"
 inputSection.Position = UDim2.new(0, 20, 0, 20)
-inputSection.Size = UDim2.new(1, -40, 0, 150)
+inputSection.Size = UDim2.new(1, -40, 0, 80) -- Reduced height
 inputSection.BackgroundTransparency = 1
 inputSection.Parent = contentArea
 
@@ -187,7 +187,7 @@ inputLabel.Parent = inputSection
 local inputBox = Instance.new("TextBox")
 inputBox.Name = "InputBox"
 inputBox.Position = UDim2.new(0, 0, 0, 25)
-inputBox.Size = UDim2.new(1, 0, 0, 100)
+inputBox.Size = UDim2.new(1, 0, 0, 50) -- 2-line height
 inputBox.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 inputBox.TextSize = 14
@@ -205,15 +205,15 @@ inputCorner.Parent = inputBox
 local inputPadding = Instance.new("UIPadding")
 inputPadding.PaddingLeft = UDim.new(0, 10)
 inputPadding.PaddingRight = UDim.new(0, 10)
-inputPadding.PaddingTop = UDim.new(0, 10)
-inputPadding.PaddingBottom = UDim.new(0, 10)
+inputPadding.PaddingTop = UDim.new(0, 8)
+inputPadding.PaddingBottom = UDim.new(0, 8)
 inputPadding.Parent = inputBox
 
--- Output section
+-- Output section (smaller)
 local outputSection = Instance.new("Frame")
 outputSection.Name = "OutputSection"
-outputSection.Position = UDim2.new(0, 20, 0, 190)
-outputSection.Size = UDim2.new(1, -40, 0, 150)
+outputSection.Position = UDim2.new(0, 20, 0, 110) -- Adjusted position
+outputSection.Size = UDim2.new(1, -40, 0, 80) -- Reduced height
 outputSection.BackgroundTransparency = 1
 outputSection.Parent = contentArea
 
@@ -231,7 +231,7 @@ outputLabel.Parent = outputSection
 local outputBox = Instance.new("TextLabel")
 outputBox.Name = "OutputBox"
 outputBox.Position = UDim2.new(0, 0, 0, 25)
-outputBox.Size = UDim2.new(1, 0, 0, 100)
+outputBox.Size = UDim2.new(1, 0, 0, 50) -- 2-line height
 outputBox.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
 outputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
 outputBox.TextSize = 14
@@ -249,14 +249,14 @@ outputCorner.Parent = outputBox
 local outputPadding = Instance.new("UIPadding")
 outputPadding.PaddingLeft = UDim.new(0, 10)
 outputPadding.PaddingRight = UDim.new(0, 10)
-outputPadding.PaddingTop = UDim.new(0, 10)
-outputPadding.PaddingBottom = UDim.new(0, 10)
+outputPadding.PaddingTop = UDim.new(0, 8)
+outputPadding.PaddingBottom = UDim.new(0, 8)
 outputPadding.Parent = outputBox
 
 -- Action buttons
 local actionButtons = Instance.new("Frame")
 actionButtons.Name = "ActionButtons"
-actionButtons.Position = UDim2.new(0, 20, 0, 360)
+actionButtons.Position = UDim2.new(0, 20, 0, 200) -- Adjusted position
 actionButtons.Size = UDim2.new(1, -40, 0, 50)
 actionButtons.BackgroundTransparency = 1
 actionButtons.Parent = contentArea
@@ -291,7 +291,7 @@ buttonCorner:Clone().Parent = copyButton
 -- Discord button
 local discordButton = Instance.new("TextButton")
 discordButton.Name = "DiscordButton"
-discordButton.Position = UDim2.new(0, 20, 0, 420)
+discordButton.Position = UDim2.new(0, 20, 0, 260) -- Adjusted position
 discordButton.Size = UDim2.new(1, -40, 0, 30)
 discordButton.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
 discordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
@@ -306,7 +306,7 @@ discordCorner.Parent = discordButton
 
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.9, 0, 0, 500)
+    mainFrame.Size = UDim2.new(0.9, 0, 0, 400)
     inputBox.TextSize = 16
     outputBox.TextSize = 16
     bypassButton.TextSize = 16
