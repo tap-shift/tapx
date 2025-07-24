@@ -52,7 +52,7 @@ local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-mainFrame.Size = UDim2.new(0, 350, 0, 450) -- Increased height
+mainFrame.Size = UDim2.new(0, 350, 0, 450)
 mainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 mainFrame.BackgroundTransparency = 0.1
 mainFrame.BorderSizePixel = 0
@@ -87,31 +87,41 @@ titleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
 titleBar.BorderSizePixel = 0
 titleBar.Parent = mainFrame
 
+-- Title container to hold both title and version
+local titleContainer = Instance.new("Frame")
+titleContainer.Name = "TitleContainer"
+titleContainer.Position = UDim2.new(0, 15, 0, 0)
+titleContainer.Size = UDim2.new(1, -50, 1, 0)
+titleContainer.BackgroundTransparency = 1
+titleContainer.Parent = titleBar
+
+-- Title text
 local title = Instance.new("TextLabel")
 title.Name = "Title"
-title.Position = UDim2.new(0, 15, 0, 0)
-title.Size = UDim2.new(1, -60, 1, 0)
+title.Position = UDim2.new(0, 0, 0, 0)
+title.Size = UDim2.new(0, 0, 1, 0)
+title.AutomaticSize = Enum.AutomaticSize.X
 title.BackgroundTransparency = 1
 title.Text = "TAPX BYPASSER"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextSize = 18
 title.Font = Enum.Font.GothamBold
 title.TextXAlignment = Enum.TextXAlignment.Left
-title.Parent = titleBar
+title.Parent = titleContainer
 
--- Version stamp
+-- Version stamp (right next to title)
 local version = Instance.new("TextLabel")
 version.Name = "Version"
-version.AnchorPoint = Vector2.new(1, 0)
-version.Position = UDim2.new(1, -10, 0, 5)
-version.Size = UDim2.new(0, 40, 0, 20)
+version.Position = UDim2.new(0, title.TextBounds.X + 5, 0, 0)
+version.Size = UDim2.new(0, 0, 1, 0)
+version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
 version.Text = "v1.0"
-version.TextColor3 = Color3.fromRGB(200, 200, 200)
-version.TextSize = 12
+version.TextColor3 = Color3.fromRGB(180, 180, 180)
+version.TextSize = 14
 version.Font = Enum.Font.Gotham
-version.TextXAlignment = Enum.TextXAlignment.Right
-version.Parent = titleBar
+version.TextXAlignment = Enum.TextXAlignment.Left
+version.Parent = titleContainer
 
 -- Close button
 local closeButton = Instance.new("TextButton")
@@ -267,16 +277,61 @@ discordCorner.Parent = discordButton
 
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.85, 0, 0, 450) -- Smaller than before
-    inputBox.TextSize = 14 -- Smaller text
+    mainFrame.Size = UDim2.new(0.85, 0, 0, 450)
+    inputBox.TextSize = 14
     outputBox.TextSize = 14
     bypassButton.TextSize = 14
     copyButton.TextSize = 14
     discordButton.TextSize = 13
 end
 
--- Dragging functionality (keep existing code)
--- [Previous dragging code here...]
+-- Dragging functionality
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function updateInput(input)
+    local delta = input.Position - dragStart
+    mainFrame.Position = UDim2.new(
+        startPos.X.Scale, 
+        startPos.X.Offset + delta.X,
+        startPos.Y.Scale, 
+        startPos.Y.Offset + delta.Y
+    )
+end
+
+titleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+       input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+        
+        local connection
+        connection = input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                connection:Disconnect()
+            end
+        end)
+    end
+end)
+
+titleBar.InputChanged:Connect(function(input)
+    if (input.UserInputType == Enum.UserInputType.MouseMovement or 
+        input.UserInputType == Enum.UserInputType.Touch) and dragging then
+        updateInput(input)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and (input == dragInput or 
+       input.UserInputType == Enum.UserInputType.MouseMovement or 
+       input.UserInputType == Enum.UserInputType.Touch) then
+        updateInput(input)
+    end
+end)
 
 -- Close button functionality
 closeButton.MouseButton1Click:Connect(function()
