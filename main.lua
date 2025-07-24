@@ -261,16 +261,14 @@ end)
 
 -- Load bypasser module
 local function loadBypasser()
-    -- Get the current script's location
-    local scriptPath = script:GetFullName()
-    local repoPath = scriptPath:match("(.*/)") or ""
-    local bypasserUrl = repoPath .. "bypasser.lua"
-    
+    -- Set raw GitHub URL
+    local bypasserUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/bypasser.lua"
+
     -- Load the module
     local success, bypasser = pcall(function()
         return loadstring(game:HttpGet(bypasserUrl))()
     end)
-    
+
     if not success then
         warn("Failed to load bypasser module: " .. tostring(bypasser))
         return nil
