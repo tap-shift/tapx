@@ -10,14 +10,14 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Notification function
-local function showNotification(text)
+-- Improved notification function
+local function showNotification(text, isError)
     local notif = Instance.new("Frame")
     notif.Name = "Notification"
-    notif.AnchorPoint = Vector2.new(1, 1)
-    notif.Position = UDim2.new(1, -20, 1, -20)
-    notif.Size = UDim2.new(0, 300, 0, 60)
-    notif.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+    notif.AnchorPoint = Vector2.new(0.5, 1)
+    notif.Position = UDim2.new(0.5, 0, 1, -20)
+    notif.Size = UDim2.new(0.8, 0, 0, 60)
+    notif.BackgroundColor3 = isError and Color3.fromRGB(200, 60, 60) or Color3.fromRGB(60, 200, 60)
     notif.BackgroundTransparency = 0.2
     notif.Parent = gui
 
@@ -34,20 +34,20 @@ local function showNotification(text)
     label.TextColor3 = Color3.fromRGB(255, 255, 255)
     label.TextSize = 14
     label.Font = Enum.Font.Gotham
-    label.TextXAlignment = Enum.TextXAlignment.Left
+    label.TextXAlignment = Enum.TextXAlignment.Center
     label.Parent = notif
 
     -- Animation
-    notif.Position = UDim2.new(1, -20, 1, 100)
-    TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(1, -20, 1, -20)}):Play()
+    notif.Position = UDim2.new(0.5, 0, 1, 100)
+    TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(0.5, 0, 1, -20)}):Play()
     
     delay(3, function()
-        TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(1, -20, 1, 100)}):Play()
+        TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(0.5, 0, 1, 100)}):Play()
         delay(0.3, function() notif:Destroy() end)
     end)
 end
 
--- Main frame with increased transparency
+-- Main frame
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -83,21 +83,6 @@ contentFrame.Parent = mainFrame
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 12)
 corner.Parent = mainFrame
-
--- Glow effect
-local glow = Instance.new("ImageLabel")
-glow.Name = "Glow"
-glow.AnchorPoint = Vector2.new(0.5, 0.5)
-glow.Position = UDim2.new(0.5, 0, 0.5, 0)
-glow.Size = UDim2.new(1, 40, 1, 40)
-glow.BackgroundTransparency = 1
-glow.Image = "rbxassetid://5028857084"
-glow.ImageColor3 = Color3.fromRGB(80, 120, 200)
-glow.ImageTransparency = 0.8
-glow.ScaleType = Enum.ScaleType.Slice
-glow.SliceCenter = Rect.new(24, 24, 276, 276)
-glow.Parent = mainFrame
-glow.ZIndex = -1
 
 -- Header section
 local header = Instance.new("Frame")
@@ -200,12 +185,6 @@ pageScroller.ScrollBarThickness = 5
 pageScroller.AutomaticCanvasSize = Enum.AutomaticSize.Y
 pageScroller.Parent = pageContainer
 
-local pageContent = Instance.new("Frame")
-pageContent.Name = "PageContent"
-pageContent.Size = UDim2.new(1, 0, 1, 0)
-pageContent.BackgroundTransparency = 1
-pageContent.Parent = pageScroller
-
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
     mainFrame.Size = UDim2.new(0.9, 0, 0, 500)
@@ -266,37 +245,37 @@ end)
 
 -- Page management
 local currentPage = nil
-local pages = {}
+local Bypasser = nil
 
-local function loadPageScript(pageName)
+local function loadLib()
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/"..pageName..".lua"))()
+        local libUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/lib.lua"
+        local response = game:HttpGet(libUrl, true)
+        return loadstring(response)()
     end)
     
     if not success then
-        warn("Failed to load page: "..pageName.."\nError: "..tostring(result))
-        showNotification("Failed to load "..pageName.." page")
+        showNotification("Failed to load bypasser library", true)
+        warn("Failed to load library: "..tostring(result))
         return nil
     end
-    
     return result
 end
 
-local function loadLib()
-    local success, lib = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/lib.lua"))()
+local function loadPageScript(pageName)
+    local success, result = pcall(function()
+        local pageUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..pageName..".lua"
+        local response = game:HttpGet(pageUrl, true)
+        return loadstring(response)()
     end)
     
     if not success then
-        warn("Failed to load library: "..tostring(lib))
-        showNotification("Failed to load library")
+        showNotification("Failed to load "..pageName.." page", true)
+        warn("Failed to load page: "..pageName.."\nError: "..tostring(result))
         return nil
     end
-    
-    return lib
+    return result
 end
-
-local Bypasser = loadLib() or error("Failed to load bypasser library")
 
 local function createPageButton(pageName)
     local button = Instance.new("TextButton")
@@ -315,10 +294,19 @@ local function createPageButton(pageName)
     corner.Parent = button
     
     button.MouseButton1Click:Connect(function()
-        if currentPage then
-            currentPage:Destroy()
+        -- Load library if not loaded yet
+        if not Bypasser then
+            Bypasser = loadLib()
+            if not Bypasser then return end
         end
         
+        -- Clear current page
+        if currentPage then
+            currentPage:Destroy()
+            currentPage = nil
+        end
+        
+        -- Create new page container
         local pageContent = Instance.new("Frame")
         pageContent.Name = pageName
         pageContent.Size = UDim2.new(1, 0, 0, 0)
@@ -326,24 +314,33 @@ local function createPageButton(pageName)
         pageContent.BackgroundTransparency = 1
         pageContent.Parent = pageScroller
         
-        -- Pass the Bypasser library to the page script
+        -- Load and execute page script
         local pageScript = loadPageScript(pageName)
         if pageScript then
-            pageScript(pageContent, Bypasser)
-        end
-        
-        currentPage = pageContent
-        
-        -- Update button colors
-        for _, btn in ipairs(pageButtons:GetChildren()) do
-            if btn:IsA("TextButton") then
-                btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
-                btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+            local success, err = pcall(function()
+                pageScript(pageContent, Bypasser)
+            end)
+            
+            if not success then
+                showNotification("Error in "..pageName.." page", true)
+                warn("Page script error: "..tostring(err))
+                pageContent:Destroy()
+                return
             end
+            
+            currentPage = pageContent
+            
+            -- Update button colors
+            for _, btn in ipairs(pageButtons:GetChildren()) do
+                if btn:IsA("TextButton") then
+                    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+                    btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+                end
+            end
+            
+            button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+            button.TextColor3 = Color3.fromRGB(255, 255, 255)
         end
-        
-        button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
-        button.TextColor3 = Color3.fromRGB(255, 255, 255)
     end)
     
     return button
@@ -355,5 +352,7 @@ createPageButton("History")
 createPageButton("Settings")
 
 -- Load default page
-pageButtons:FindFirstChild("Bypasser").MouseButton1Click:Wait()
-pageButtons:FindFirstChild("Bypasser"):MouseButton1Click()
+task.spawn(function()
+    wait(0.1) -- Small delay to ensure everything is loaded
+    pageButtons:FindFirstChild("Bypasser"):MouseButton1Click()
+end)
