@@ -5,7 +5,7 @@ local player = Players.LocalPlayer
 
 -- Create main GUI
 local gui = Instance.new("ScreenGui")
-gui.Name = "TapXBypasserUI"
+gui.Name = "TapXBypasserFreeUI"
 gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
@@ -109,7 +109,7 @@ title.Name = "Title"
 title.Size = UDim2.new(0, 0, 1, 0)
 title.AutomaticSize = Enum.AutomaticSize.X
 title.BackgroundTransparency = 1
-title.Text = "TAPX BYPASSER"
+title.Text = "TAPX BYPASSER FREE"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.TextSize = 20
 title.Font = Enum.Font.GothamBold
@@ -118,7 +118,7 @@ title.Parent = titleContainer
 
 local version = Instance.new("TextLabel")
 version.Name = "Version"
-version.Position = UDim2.new(0, title.TextBounds.X + 30, 0, 0)
+version.Position = UDim2.new(0, title.TextBounds.X + 40, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
