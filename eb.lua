@@ -1,1 +1,7 @@
-
+return {
+    users = {
+        "Player1",
+        "Player2",
+        "Player3"
+    }
+}
