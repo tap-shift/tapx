@@ -52,9 +52,9 @@ local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-mainFrame.Size = UDim2.new(0, 380, 0, 400) -- Reduced height
+mainFrame.Size = UDim2.new(0, 500, 0, 400)
 mainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
-mainFrame.BackgroundTransparency = 0.15 -- More transparent
+mainFrame.BackgroundTransparency = 0.15
 mainFrame.BorderSizePixel = 0
 mainFrame.ClipsDescendants = true
 mainFrame.Parent = gui
@@ -64,7 +64,7 @@ local backgroundBlur = Instance.new("Frame")
 backgroundBlur.Name = "BackgroundBlur"
 backgroundBlur.Size = UDim2.new(1, 0, 1, 0)
 backgroundBlur.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
-backgroundBlur.BackgroundTransparency = 0.4 -- More transparent
+backgroundBlur.BackgroundTransparency = 0.4
 backgroundBlur.ZIndex = -1
 backgroundBlur.Parent = mainFrame
 
@@ -137,7 +137,7 @@ version.Position = UDim2.new(0, title.TextBounds.X + 30, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
-version.Text = "v1.3"
+version.Text = "v1.4"
 version.TextColor3 = Color3.fromRGB(180, 180, 180)
 version.TextSize = 16
 version.Font = Enum.Font.Gotham
@@ -157,161 +157,58 @@ closeButton.ImageRectSize = Vector2.new(24, 24)
 closeButton.ImageColor3 = Color3.fromRGB(200, 200, 200)
 closeButton.Parent = header
 
--- Main content area
-local contentArea = Instance.new("Frame")
-contentArea.Name = "ContentArea"
-contentArea.Position = UDim2.new(0, 0, 0, 50)
-contentArea.Size = UDim2.new(1, 0, 1, -50)
-contentArea.BackgroundTransparency = 1
-contentArea.Parent = contentFrame
+-- Sidebar for pages
+local sidebar = Instance.new("Frame")
+sidebar.Name = "Sidebar"
+sidebar.Position = UDim2.new(0, 0, 0, 50)
+sidebar.Size = UDim2.new(0, 120, 1, -50)
+sidebar.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+sidebar.BackgroundTransparency = 0.2
+sidebar.BorderSizePixel = 0
+sidebar.Parent = contentFrame
 
--- Input section (smaller)
-local inputSection = Instance.new("Frame")
-inputSection.Name = "InputSection"
-inputSection.Position = UDim2.new(0, 20, 0, 20)
-inputSection.Size = UDim2.new(1, -40, 0, 80) -- Reduced height
-inputSection.BackgroundTransparency = 1
-inputSection.Parent = contentArea
+local sidebarCorner = Instance.new("UICorner")
+sidebarCorner.CornerRadius = UDim.new(0, 12)
+sidebarCorner.Parent = sidebar
 
-local inputLabel = Instance.new("TextLabel")
-inputLabel.Name = "InputLabel"
-inputLabel.Size = UDim2.new(1, 0, 0, 20)
-inputLabel.BackgroundTransparency = 1
-inputLabel.Text = "INPUT TEXT"
-inputLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-inputLabel.TextSize = 14
-inputLabel.Font = Enum.Font.GothamMedium
-inputLabel.TextXAlignment = Enum.TextXAlignment.Left
-inputLabel.Parent = inputSection
+-- Page buttons container
+local pageButtons = Instance.new("Frame")
+pageButtons.Name = "PageButtons"
+pageButtons.Position = UDim2.new(0, 10, 0, 10)
+pageButtons.Size = UDim2.new(1, -20, 1, -20)
+pageButtons.BackgroundTransparency = 1
+pageButtons.Parent = sidebar
 
-local inputBox = Instance.new("TextBox")
-inputBox.Name = "InputBox"
-inputBox.Position = UDim2.new(0, 0, 0, 25)
-inputBox.Size = UDim2.new(1, 0, 0, 50) -- 2-line height
-inputBox.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-inputBox.TextSize = 14
-inputBox.Font = Enum.Font.Gotham
-inputBox.TextWrapped = true
-inputBox.TextXAlignment = Enum.TextXAlignment.Left
-inputBox.TextYAlignment = Enum.TextYAlignment.Top
-inputBox.PlaceholderText = "Type text to bypass here..."
-inputBox.Parent = inputSection
+local pageListLayout = Instance.new("UIListLayout")
+pageListLayout.Padding = UDim.new(0, 8)
+pageListLayout.Parent = pageButtons
 
-local inputCorner = Instance.new("UICorner")
-inputCorner.CornerRadius = UDim.new(0, 8)
-inputCorner.Parent = inputBox
+-- Page container
+local pageContainer = Instance.new("Frame")
+pageContainer.Name = "PageContainer"
+pageContainer.Position = UDim2.new(0, 130, 0, 50)
+pageContainer.Size = UDim2.new(1, -130, 1, -50)
+pageContainer.BackgroundTransparency = 1
+pageContainer.Parent = contentFrame
 
-local inputPadding = Instance.new("UIPadding")
-inputPadding.PaddingLeft = UDim.new(0, 10)
-inputPadding.PaddingRight = UDim.new(0, 10)
-inputPadding.PaddingTop = UDim.new(0, 8)
-inputPadding.PaddingBottom = UDim.new(0, 8)
-inputPadding.Parent = inputBox
+-- Create page scrolling frame
+local pageScroller = Instance.new("ScrollingFrame")
+pageScroller.Name = "PageScroller"
+pageScroller.Size = UDim2.new(1, 0, 1, 0)
+pageScroller.BackgroundTransparency = 1
+pageScroller.ScrollBarThickness = 5
+pageScroller.AutomaticCanvasSize = Enum.AutomaticSize.Y
+pageScroller.Parent = pageContainer
 
--- Output section (smaller)
-local outputSection = Instance.new("Frame")
-outputSection.Name = "OutputSection"
-outputSection.Position = UDim2.new(0, 20, 0, 110) -- Adjusted position
-outputSection.Size = UDim2.new(1, -40, 0, 80) -- Reduced height
-outputSection.BackgroundTransparency = 1
-outputSection.Parent = contentArea
-
-local outputLabel = Instance.new("TextLabel")
-outputLabel.Name = "OutputLabel"
-outputLabel.Size = UDim2.new(1, 0, 0, 20)
-outputLabel.BackgroundTransparency = 1
-outputLabel.Text = "BYPASSED TEXT"
-outputLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-outputLabel.TextSize = 14
-outputLabel.Font = Enum.Font.GothamMedium
-outputLabel.TextXAlignment = Enum.TextXAlignment.Left
-outputLabel.Parent = outputSection
-
-local outputBox = Instance.new("TextLabel")
-outputBox.Name = "OutputBox"
-outputBox.Position = UDim2.new(0, 0, 0, 25)
-outputBox.Size = UDim2.new(1, 0, 0, 50) -- 2-line height
-outputBox.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-outputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
-outputBox.TextSize = 14
-outputBox.Font = Enum.Font.Gotham
-outputBox.TextWrapped = true
-outputBox.TextXAlignment = Enum.TextXAlignment.Left
-outputBox.TextYAlignment = Enum.TextYAlignment.Top
-outputBox.Text = ""
-outputBox.Parent = outputSection
-
-local outputCorner = Instance.new("UICorner")
-outputCorner.CornerRadius = UDim.new(0, 8)
-outputCorner.Parent = outputBox
-
-local outputPadding = Instance.new("UIPadding")
-outputPadding.PaddingLeft = UDim.new(0, 10)
-outputPadding.PaddingRight = UDim.new(0, 10)
-outputPadding.PaddingTop = UDim.new(0, 8)
-outputPadding.PaddingBottom = UDim.new(0, 8)
-outputPadding.Parent = outputBox
-
--- Action buttons
-local actionButtons = Instance.new("Frame")
-actionButtons.Name = "ActionButtons"
-actionButtons.Position = UDim2.new(0, 20, 0, 200) -- Adjusted position
-actionButtons.Size = UDim2.new(1, -40, 0, 50)
-actionButtons.BackgroundTransparency = 1
-actionButtons.Parent = contentArea
-
-local bypassButton = Instance.new("TextButton")
-bypassButton.Name = "BypassButton"
-bypassButton.Size = UDim2.new(0.48, 0, 1, 0)
-bypassButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
-bypassButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-bypassButton.Text = "BYPASS"
-bypassButton.TextSize = 14
-bypassButton.Font = Enum.Font.GothamBold
-bypassButton.Parent = actionButtons
-
-local copyButton = Instance.new("TextButton")
-copyButton.Name = "CopyButton"
-copyButton.Position = UDim2.new(0.52, 0, 0, 0)
-copyButton.Size = UDim2.new(0.48, 0, 1, 0)
-copyButton.BackgroundColor3 = Color3.fromRGB(60, 60, 70)
-copyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-copyButton.Text = "COPY"
-copyButton.TextSize = 14
-copyButton.Font = Enum.Font.GothamBold
-copyButton.Parent = actionButtons
-
--- Add corner radius to buttons
-local buttonCorner = Instance.new("UICorner")
-buttonCorner.CornerRadius = UDim.new(0, 6)
-buttonCorner.Parent = bypassButton
-buttonCorner:Clone().Parent = copyButton
-
--- Discord button
-local discordButton = Instance.new("TextButton")
-discordButton.Name = "DiscordButton"
-discordButton.Position = UDim2.new(0, 20, 0, 260) -- Adjusted position
-discordButton.Size = UDim2.new(1, -40, 0, 30)
-discordButton.BackgroundColor3 = Color3.fromRGB(88, 101, 242)
-discordButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-discordButton.Text = "JOIN OUR DISCORD"
-discordButton.TextSize = 14
-discordButton.Font = Enum.Font.GothamBold
-discordButton.Parent = contentArea
-
-local discordCorner = Instance.new("UICorner")
-discordCorner.CornerRadius = UDim.new(0, 6)
-discordCorner.Parent = discordButton
+local pageContent = Instance.new("Frame")
+pageContent.Name = "PageContent"
+pageContent.Size = UDim2.new(1, 0, 1, 0)
+pageContent.BackgroundTransparency = 1
+pageContent.Parent = pageScroller
 
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.9, 0, 0, 400)
-    inputBox.TextSize = 16
-    outputBox.TextSize = 16
-    bypassButton.TextSize = 16
-    copyButton.TextSize = 16
-    discordButton.TextSize = 15
+    mainFrame.Size = UDim2.new(0.9, 0, 0, 500)
 end
 
 -- Dragging functionality
@@ -367,40 +264,79 @@ closeButton.MouseButton1Click:Connect(function()
     gui:Destroy()
 end)
 
--- Discord button functionality
-discordButton.MouseButton1Click:Connect(function()
-    if setclipboard then
-        setclipboard("https://discord.gg/FkNXHAxdmR")
-        showNotification("Discord link copied to clipboard!")
-    else
-        showNotification("Clipboard not available - check console")
-        print("Join our Discord: https://discord.gg/FkNXHAxdmR")
-    end
-end)
+-- Page management
+local currentPage = nil
+local pages = {}
 
--- Load bypasser module
-local function loadBypasser()
-    local bypasserUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/bypasser.lua"
-    local success, bypasser = pcall(function()
-        return loadstring(game:HttpGet(bypasserUrl))()
+local function loadPageScript(pageName)
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/"..pageName..".lua"))()
     end)
     
     if not success then
-        warn("Failed to load bypasser module: " .. tostring(bypasser))
+        warn("Failed to load page: "..pageName.."\nError: "..tostring(result))
+        showNotification("Failed to load "..pageName.." page")
         return nil
     end
-    return bypasser
+    
+    return result
 end
 
--- Initialize bypasser
-local Bypasser = loadBypasser() or error("Failed to load bypasser module")
+local function createPageButton(pageName)
+    local button = Instance.new("TextButton")
+    button.Name = pageName
+    button.Size = UDim2.new(1, 0, 0, 40)
+    button.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+    button.BackgroundTransparency = 0.5
+    button.Text = pageName:upper()
+    button.TextColor3 = Color3.fromRGB(200, 200, 200)
+    button.TextSize = 14
+    button.Font = Enum.Font.GothamBold
+    button.Parent = pageButtons
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 6)
+    corner.Parent = button
+    
+    button.MouseButton1Click:Connect(function()
+        if currentPage then
+            currentPage:Destroy()
+        end
+        
+        local pageContent = Instance.new("Frame")
+        pageContent.Name = pageName
+        pageContent.Size = UDim2.new(1, 0, 0, 0)
+        pageContent.AutomaticSize = Enum.AutomaticSize.Y
+        pageContent.BackgroundTransparency = 1
+        pageContent.Parent = pageScroller
+        
+        local pageScript = loadPageScript(pageName)
+        if pageScript then
+            pageScript(pageContent)
+        end
+        
+        currentPage = pageContent
+        
+        -- Update button colors
+        for _, btn in ipairs(pageButtons:GetChildren()) do
+            if btn:IsA("TextButton") then
+                btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+                btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+            end
+        end
+        
+        button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+        button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end)
+    
+    return button
+end
 
--- Connect buttons
-bypassButton.MouseButton1Click:Connect(function()
-    outputBox.Text = Bypasser.bypassText(inputBox.Text)
-end)
+-- Create pages
+createPageButton("Bypasser")
+createPageButton("History")
+createPageButton("Settings")
 
-copyButton.MouseButton1Click:Connect(function()
-    Bypasser.copyToClipboard(outputBox.Text)
-    showNotification("Copied to clipboard!")
-end)
+-- Load default page
+pageButtons:FindFirstChild("Bypasser").MouseButton1Click:Wait()
+pageButtons:FindFirstChild("Bypasser"):MouseButton1Click()
