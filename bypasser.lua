@@ -5,18 +5,21 @@ local Bypasser = {}
 local bypassDictionary = {
     ["test"] = "this word got patched. Please try bypassing a different word.",
     ["fuck"] = "⌝fมcׂׂׂᴋִִִ⌝",
-    ["shit"] = "⌝ธhῘtִִִ⌝",
+    ["shit"] = "ꜱִִִhἷt",
     ["ass"] = "⌝αִִִʂִִִʂִִִ⌝",
     ["discord"] = "⌝dỈִִִธcorִִִd⌝",
     ["nigga"] = "this word got patched. Please try bypassing a different word.",
     ["dick"] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
-    ["sex"] = "⌝ʂִִִexִִׇﹺ⌝",
-    ["dumbass"] = "⌝dษmbαִִִʂִִִʂִִִ⌝",
-    ["pussy"] = "⌝pมธธy⌝",
+    ["sex"] = "ธex",
+    ["dumbass"] = "dมmbaธธ",
+    ["pussy"] = "pมธธy",
     ["cum"] = "⌝cׂׂׂมmִִִ⌝",
     ["penis"] = "⌝peⴖῘִִִʂִִִ⌝",
-    ["boobs"] = "⌝ḅִ︭oobʂִִִ⌝",
-    ["bitch"] = "⌝ḅִ︭Ỉִִִtcׂׂׂḥִ︭⌝",
+    ["boobs"] = "ḅooḅʂ",
+    ["bitch"] = "ḅἷtcḥ",
+    ["asshole"] = "aִִִธธhởִִִlִִִe",
+    ["cock"] = "cׂׂׂὂִִִcׂׂׂҡִִִ",
+    ["bitches"] = "ḅִ︭ἷִִִtcׂׂׂḥeʂ",
     -- Add more entries as: ["word"] = "bypassed_version"
 }
 
