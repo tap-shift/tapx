@@ -282,6 +282,22 @@ local function loadPageScript(pageName)
     return result
 end
 
+local function loadLib()
+    local success, lib = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/lib.lua"))()
+    end)
+    
+    if not success then
+        warn("Failed to load library: "..tostring(lib))
+        showNotification("Failed to load library")
+        return nil
+    end
+    
+    return lib
+end
+
+local Bypasser = loadLib() or error("Failed to load bypasser library")
+
 local function createPageButton(pageName)
     local button = Instance.new("TextButton")
     button.Name = pageName
@@ -310,9 +326,10 @@ local function createPageButton(pageName)
         pageContent.BackgroundTransparency = 1
         pageContent.Parent = pageScroller
         
+        -- Pass the Bypasser library to the page script
         local pageScript = loadPageScript(pageName)
         if pageScript then
-            pageScript(pageContent)
+            pageScript(pageContent, Bypasser)
         end
         
         currentPage = pageContent
