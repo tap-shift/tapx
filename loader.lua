@@ -123,17 +123,23 @@ local function loadKeys()
     return success and keys or nil
 end
 
--- Check if user is whitelisted for a key type
-local function isWhitelisted(keyType, username)
-    local scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/"..keyType.."/"..keyType..".lua"
-    local success, whitelist = pcall(function()
+-- Check if user is whitelisted for a specific key
+local function isWhitelisted(key, username)
+    local keyType = keys[key].type
+    local scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..keyType..".lua"
+    
+    local success, keyData = pcall(function()
         return loadstring(game:HttpGet(scriptUrl))()
     end)
     
-    if success and whitelist then
-        for _, name in ipairs(whitelist.users) do
-            if string.lower(name) == string.lower(username) then
-                return true
+    if success and keyData then
+        for _, data in ipairs(keyData) do
+            if data.key == key then
+                for _, name in ipairs(data.users) do
+                    if string.lower(name) == string.lower(username) then
+                        return true
+                    end
+                end
             end
         end
     end
@@ -174,20 +180,19 @@ checkKeyButton.MouseButton1Click:Connect(function()
         return
     end
     
-    local keyData = keys[key]
-    if not keyData then
+    if not keys[key] then
         showNotification("Invalid key", true)
         return
     end
     
     local username = player.Name
-    if not isWhitelisted(keyData.type, username) then
+    if not isWhitelisted(key, username) then
         showNotification("Key not whitelisted for your account", true)
         return
     end
     
-    showNotification("Key accepted! Loading "..keyData.type.." version...")
-    loadScriptVersion(keyData.type)
+    showNotification("Key accepted! Loading "..keys[key].type.." version...")
+    loadScriptVersion(keys[key].type)
 end)
 
 noKeyButton.MouseButton1Click:Connect(function()
