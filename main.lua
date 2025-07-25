@@ -10,14 +10,14 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Improved notification function
+-- Original notification function (bottom right, script themed)
 local function showNotification(text, isError)
     local notif = Instance.new("Frame")
     notif.Name = "Notification"
-    notif.AnchorPoint = Vector2.new(0.5, 1)
-    notif.Position = UDim2.new(0.5, 0, 1, -20)
-    notif.Size = UDim2.new(0.8, 0, 0, 60)
-    notif.BackgroundColor3 = isError and Color3.fromRGB(200, 60, 60) or Color3.fromRGB(60, 200, 60)
+    notif.AnchorPoint = Vector2.new(1, 1)
+    notif.Position = UDim2.new(1, -20, 1, -20)
+    notif.Size = UDim2.new(0, 300, 0, 60)
+    notif.BackgroundColor3 = isError and Color3.fromRGB(80, 40, 40) or Color3.fromRGB(40, 40, 50)
     notif.BackgroundTransparency = 0.2
     notif.Parent = gui
 
@@ -34,15 +34,15 @@ local function showNotification(text, isError)
     label.TextColor3 = Color3.fromRGB(255, 255, 255)
     label.TextSize = 14
     label.Font = Enum.Font.Gotham
-    label.TextXAlignment = Enum.TextXAlignment.Center
+    label.TextXAlignment = Enum.TextXAlignment.Left
     label.Parent = notif
 
     -- Animation
-    notif.Position = UDim2.new(0.5, 0, 1, 100)
-    TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(0.5, 0, 1, -20)}):Play()
+    notif.Position = UDim2.new(1, -20, 1, 100)
+    TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(1, -20, 1, -20)}):Play()
     
     delay(3, function()
-        TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(0.5, 0, 1, 100)}):Play()
+        TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(1, -20, 1, 100)}):Play()
         delay(0.3, function() notif:Destroy() end)
     end)
 end
@@ -122,7 +122,7 @@ version.Position = UDim2.new(0, title.TextBounds.X + 30, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
-version.Text = "v1.4"
+version.Text = "v1.5"
 version.TextColor3 = Color3.fromRGB(180, 180, 180)
 version.TextSize = 16
 version.Font = Enum.Font.Gotham
