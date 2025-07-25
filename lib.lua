@@ -8,7 +8,7 @@ Bypasser.bypassDictionary = {
     ["shit"] = "ꜱִִִhἷt",
     ["ass"] = "⌝αִִִʂִִִʂִִִ⌝",
     ["discord"] = "⌝dỈִִִธcorִִִd⌝",
-    ["nigga"] = "this word got patched. Please try bypassing a different word.",
+    ["nigga"] = "กἷֽꞡֽꞡֽαִִִ",
     ["dick"] = "⌝dỈִִִcׂׂׂҡִִִ⌝",
     ["sex"] = "ธex",
     ["dumbass"] = "dมmbaธธ",
@@ -21,6 +21,7 @@ Bypasser.bypassDictionary = {
     ["cock"] = "cׂׂׂὂִִִcׂׂׂҡִִִ",
     ["bitches"] = "ḅִ︭ἷִִִtcׂׂׂḥeʂ",
     ["booty"] = "ḅִ︭ooty︭",
+    ["fuckass"] = "fมcׂׂׂᴋ︭aธธ",
 }
 
 function Bypasser.bypassText(text: string): string
