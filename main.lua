@@ -249,9 +249,7 @@ local Bypasser = nil
 
 local function loadLib()
     local success, result = pcall(function()
-        local libUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/lib.lua"
-        local response = game:HttpGet(libUrl, true)
-        return loadstring(response)()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/lib.lua"))()
     end)
     
     if not success then
@@ -262,19 +260,44 @@ local function loadLib()
     return result
 end
 
-local function loadPageScript(pageName)
+-- Individual page load functions
+local function loadBypasserPage(frame, bypasser)
     local success, result = pcall(function()
-        local pageUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..pageName..".lua"
-        local response = game:HttpGet(pageUrl, true)
-        return loadstring(response)()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/bypasser.lua"))()
     end)
     
     if not success then
-        showNotification("Failed to load "..pageName.." page", true)
-        warn("Failed to load page: "..pageName.."\nError: "..tostring(result))
+        showNotification("Failed to load Bypasser page", true)
+        warn("Failed to load Bypasser page: "..tostring(result))
         return nil
     end
-    return result
+    return result(frame, bypasser)
+end
+
+local function loadHistoryPage(frame, bypasser)
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/history.lua"))()
+    end)
+    
+    if not success then
+        showNotification("Failed to load History page", true)
+        warn("Failed to load History page: "..tostring(result))
+        return nil
+    end
+    return result(frame, bypasser)
+end
+
+local function loadSettingsPage(frame, bypasser)
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/settings.lua"))()
+    end)
+    
+    if not success then
+        showNotification("Failed to load Settings page", true)
+        warn("Failed to load Settings page: "..tostring(result))
+        return nil
+    end
+    return result(frame, bypasser)
 end
 
 local function createPageButton(pageName)
@@ -314,33 +337,36 @@ local function createPageButton(pageName)
         pageContent.BackgroundTransparency = 1
         pageContent.Parent = pageScroller
         
-        -- Load and execute page script
-        local pageScript = loadPageScript(pageName)
-        if pageScript then
-            local success, err = pcall(function()
-                pageScript(pageContent, Bypasser)
-            end)
-            
-            if not success then
-                showNotification("Error in "..pageName.." page", true)
-                warn("Page script error: "..tostring(err))
-                pageContent:Destroy()
-                return
+        -- Load specific page based on name
+        local success, err = pcall(function()
+            if pageName == "Bypasser" then
+                loadBypasserPage(pageContent, Bypasser)
+            elseif pageName == "History" then
+                loadHistoryPage(pageContent, Bypasser)
+            elseif pageName == "Settings" then
+                loadSettingsPage(pageContent, Bypasser)
             end
-            
-            currentPage = pageContent
-            
-            -- Update button colors
-            for _, btn in ipairs(pageButtons:GetChildren()) do
-                if btn:IsA("TextButton") then
-                    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
-                    btn.TextColor3 = Color3.fromRGB(200, 200, 200)
-                end
-            end
-            
-            button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
-            button.TextColor3 = Color3.fromRGB(255, 255, 255)
+        end)
+        
+        if not success then
+            showNotification("Error in "..pageName.." page", true)
+            warn("Page script error: "..tostring(err))
+            pageContent:Destroy()
+            return
         end
+        
+        currentPage = pageContent
+        
+        -- Update button colors
+        for _, btn in ipairs(pageButtons:GetChildren()) do
+            if btn:IsA("TextButton") then
+                btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+                btn.TextColor3 = Color3.fromRGB(200, 200, 200)
+            end
+        end
+        
+        button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+        button.TextColor3 = Color3.fromRGB(255, 255, 255)
     end)
     
     return button
