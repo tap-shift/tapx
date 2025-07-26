@@ -210,31 +210,44 @@ end)
 local keys
 local function loadKeys()
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua"))()
+        local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua", true)
+        return loadstring(response)()
     end)
-    if success then
-        keys = result
+    if not success then
+        warn("Failed to load keys: "..tostring(result))
+        return nil
     end
-    return success and keys or nil
+    return result
 end
 
 -- Check if user is whitelisted for a specific key and get key type
 local function verifyKeyAndUser(key, username)
     if not keys or not keys[key] then 
-        return false, nil
+        warn("Key not found in keys.lua")
+        return false, nil 
     end
     
     local keyType = keys[key].type
     local scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..keyType..".lua"
     
     local success, keyData = pcall(function()
-        return loadstring(game:HttpGet(scriptUrl))()
+        local response = game:HttpGet(scriptUrl, true)
+        return loadstring(response)()
     end)
     
-    if not success or not keyData then
+    if not success then
+        warn("Failed to load "..keyType..".lua: "..tostring(keyData))
         return false, nil
     end
     
+    if not keyData then
+        warn("No data returned from "..keyType..".lua")
+        return false, nil
+    end
+
+    -- Debug print to verify key data structure
+    warn("Key data retrieved:", keyData)
+
     -- Find the specific key in the key data file
     for _, keyEntry in ipairs(keyData) do
         if keyEntry.key == key then
@@ -248,28 +261,29 @@ local function verifyKeyAndUser(key, username)
         end
     end
     
+    warn("Key found but user not whitelisted")
     return false, nil
 end
 
 -- Load the appropriate script version based on key type
 local function loadScriptVersion(keyType)
+    if not loaderGui or not loaderGui.Parent then return end
+    
     loaderGui:Destroy() -- Remove loader UI
     
     local scriptUrl
     if keyType == "pro" or keyType == "eb" then
-        -- Both pro and eb keys load the pro version
         scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/pro/main.lua"
     elseif keyType == "eu" then
-        -- EU keys load the free version
         scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua"
     else
-        -- Invalid key type, kill script
         game:GetService("Players").LocalPlayer:Kick("Invalid license type")
         return
     end
     
     local success, err = pcall(function()
-        loadstring(game:HttpGet(scriptUrl))()
+        local response = game:HttpGet(scriptUrl, true)
+        loadstring(response)()
     end)
     
     if not success then
@@ -278,9 +292,13 @@ local function loadScriptVersion(keyType)
     end
 end
 
--- Key verification button event
+-- Updated button event with better error handling
 checkKeyButton.MouseButton1Click:Connect(function()
-    if not loadKeys() then
+    -- Clear any previous errors
+    warn("Attempting to verify key...")
+    
+    keys = loadKeys()
+    if not keys then
         showNotification("Failed to load keys database", true)
         return
     end
@@ -291,15 +309,25 @@ checkKeyButton.MouseButton1Click:Connect(function()
         return
     end
     
+    warn("Checking key:", key)
+    if not keys[key] then
+        showNotification("Invalid key", true)
+        warn("Key not found in keys.lua")
+        return
+    end
+    
     local username = player.Name
+    warn("Verifying user:", username)
+    
     local isValid, keyType = verifyKeyAndUser(key, username)
     
-    if not isValid then
-        showNotification("Invalid key or not whitelisted", true)
+    if not isValid or not keyType then
+        showNotification("Key not whitelisted for your account", true)
         game:GetService("Players").LocalPlayer:Kick("Unauthorized license usage")
         return
     end
     
+    warn("Key verified successfully, type:", keyType)
     showNotification("Key accepted! Loading version...")
     loadScriptVersion(keyType)
 end)
@@ -308,5 +336,12 @@ end)
 noKeyButton.MouseButton1Click:Connect(function()
     showNotification("Loading free version...")
     loaderGui:Destroy()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua"))()
+    local success, err = pcall(function()
+        local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua", true)
+        loadstring(response)()
+    end)
+    if not success then
+        warn("Failed to load free version: "..tostring(err))
+        game:GetService("Players").LocalPlayer:Kick("Failed to load free version")
+    end
 end)
