@@ -5,7 +5,7 @@ return {
     },
     {
         key = "TAPX-PRO-8888",
-        users = {"ProUser2"}
+        users = {"rivalenMeisterPro"}
     },
     {
         key = "TAPX-PRO-9999",
