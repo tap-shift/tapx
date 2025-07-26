@@ -59,10 +59,48 @@ loaderFrame.BorderSizePixel = 0
 loaderFrame.ClipsDescendants = true
 loaderFrame.Parent = loaderGui
 
+-- Header section (for dragging)
+local header = Instance.new("Frame")
+header.Name = "Header"
+header.Size = UDim2.new(1, 0, 0, 30)
+header.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+header.BorderSizePixel = 0
+header.Parent = loaderFrame
+
+local headerCorner = Instance.new("UICorner")
+headerCorner.CornerRadius = UDim.new(0, 12)
+headerCorner.Parent = header
+
+-- Title
+local title = Instance.new("TextLabel")
+title.Name = "Title"
+title.Size = UDim2.new(0.7, 0, 1, 0)
+title.Position = UDim2.new(0, 10, 0, 0)
+title.BackgroundTransparency = 1
+title.Text = "TAPX LOADER"
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextSize = 16
+title.Font = Enum.Font.GothamBold
+title.TextXAlignment = Enum.TextXAlignment.Left
+title.Parent = header
+
+-- Close button (same as main script)
+local closeButton = Instance.new("ImageButton")
+closeButton.Name = "CloseButton"
+closeButton.AnchorPoint = Vector2.new(1, 0.5)
+closeButton.Position = UDim2.new(1, -10, 0.5, 0)
+closeButton.Size = UDim2.new(0, 20, 0, 20)
+closeButton.BackgroundTransparency = 1
+closeButton.Image = "rbxassetid://3926305904"
+closeButton.ImageRectOffset = Vector2.new(284, 4)
+closeButton.ImageRectSize = Vector2.new(24, 24)
+closeButton.ImageColor3 = Color3.fromRGB(200, 200, 200)
+closeButton.Parent = header
+
 -- Key input section
 local keyInput = Instance.new("TextBox")
 keyInput.Name = "KeyInput"
-keyInput.Position = UDim2.new(0.1, 0, 0.3, 0)
+keyInput.Position = UDim2.new(0.1, 0, 0.3, 30) -- Adjusted for header
 keyInput.Size = UDim2.new(0.8, 0, 0, 40)
 keyInput.PlaceholderText = "Enter your license key..."
 keyInput.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
@@ -73,7 +111,7 @@ keyInput.Parent = loaderFrame
 
 local noKeyButton = Instance.new("TextButton")
 noKeyButton.Name = "NoKeyButton"
-noKeyButton.Position = UDim2.new(0.1, 0, 0.5, 0)
+noKeyButton.Position = UDim2.new(0.1, 0, 0.5, 30) -- Adjusted for header
 noKeyButton.Size = UDim2.new(0.8, 0, 0, 20)
 noKeyButton.BackgroundTransparency = 1
 noKeyButton.Text = "I don't have a key (free version)"
@@ -93,7 +131,7 @@ underline.Parent = noKeyButton
 
 local checkKeyButton = Instance.new("TextButton")
 checkKeyButton.Name = "CheckKeyButton"
-checkKeyButton.Position = UDim2.new(0.3, 0, 0.7, 0)
+checkKeyButton.Position = UDim2.new(0.3, 0, 0.7, 30) -- Adjusted for header
 checkKeyButton.Size = UDim2.new(0.4, 0, 0, 40)
 checkKeyButton.Text = "CHECK KEY"
 checkKeyButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
@@ -104,7 +142,7 @@ checkKeyButton.Parent = loaderFrame
 
 -- Add corner radius to elements
 local corner = Instance.new("UICorner")
-corner.CornerRadius = UDim.new(0, 8)
+corner.CornerRadius = UDim.new(0, 12)
 corner.Parent = loaderFrame
 
 local inputCorner = Instance.new("UICorner")
@@ -115,11 +153,68 @@ local buttonCorner = Instance.new("UICorner")
 buttonCorner.CornerRadius = UDim.new(0, 6)
 buttonCorner.Parent = checkKeyButton
 
+-- Dragging functionality
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function updateInput(input)
+    local delta = input.Position - dragStart
+    loaderFrame.Position = UDim2.new(
+        startPos.X.Scale, 
+        startPos.X.Offset + delta.X,
+        startPos.Y.Scale, 
+        startPos.Y.Offset + delta.Y
+    )
+end
+
+header.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+       input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = loaderFrame.Position
+        
+        local connection
+        connection = input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+                connection:Disconnect()
+            end
+        end)
+    end
+end)
+
+header.InputChanged:Connect(function(input)
+    if (input.UserInputType == Enum.UserInputType.MouseMovement or 
+        input.UserInputType == Enum.UserInputType.Touch) and dragging then
+        updateInput(input)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and (input == dragInput or 
+       input.UserInputType == Enum.UserInputType.MouseMovement or 
+       input.UserInputType == Enum.UserInputType.Touch) then
+        updateInput(input)
+    end
+end)
+
+-- Close button functionality
+closeButton.MouseButton1Click:Connect(function()
+    loaderGui:Destroy()
+end)
+
 -- Load keys database
+local keys
 local function loadKeys()
-    local success, keys = pcall(function()
+    local success, result = pcall(function()
         return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua"))()
     end)
+    if success then
+        keys = result
+    end
     return success and keys or nil
 end
 
@@ -168,8 +263,7 @@ end
 
 -- Button events
 checkKeyButton.MouseButton1Click:Connect(function()
-    local keys = loadKeys()
-    if not keys then
+    if not loadKeys() then
         showNotification("Failed to load keys database", true)
         return
     end
