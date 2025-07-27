@@ -246,6 +246,7 @@ end)
 -- Page management
 local currentPage = nil
 local Bypasser = nil
+local isLoadingPage = false -- Add flag to prevent duplicate loading
 
 local function loadLib()
     local success, result = pcall(function()
@@ -316,11 +317,21 @@ local function createPageButton(pageName)
     corner.CornerRadius = UDim.new(0, 6)
     corner.Parent = button
     
-    button.MouseButton1Click:Connect(function()
+    -- Changed from MouseButton1Click to Activated for TextButton
+    button.Activated:Connect(function()
+        -- Prevent duplicate loading
+        if isLoadingPage then
+            return
+        end
+        isLoadingPage = true
+        
         -- Load library if not loaded yet
         if not Bypasser then
             Bypasser = loadLib()
-            if not Bypasser then return end
+            if not Bypasser then 
+                isLoadingPage = false
+                return 
+            end
         end
         
         -- Clear current page
@@ -352,6 +363,7 @@ local function createPageButton(pageName)
             showNotification("Error in "..pageName.." page", true)
             warn("Page script error: "..tostring(err))
             pageContent:Destroy()
+            isLoadingPage = false
             return
         end
         
@@ -367,6 +379,8 @@ local function createPageButton(pageName)
         
         button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
         button.TextColor3 = Color3.fromRGB(255, 255, 255)
+        
+        isLoadingPage = false
     end)
     
     return button
@@ -380,5 +394,5 @@ createPageButton("Settings")
 -- Load default page
 task.spawn(function()
     wait(0.1) -- Small delay to ensure everything is loaded
-    pageButtons:FindFirstChild("Bypasser"):MouseButton1Click()
+    pageButtons:FindFirstChild("Bypasser"):Activate()
 end)
