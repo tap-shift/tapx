@@ -220,7 +220,7 @@ local function loadKeys()
     return result
 end
 
--- Updated verifyKeyAndUser function with better error handling
+-- Updated verifyKeyAndUser function with proper error handling
 local function verifyKeyAndUser(key, username)
     if not keys or not keys[key] then 
         warn("Key not found in keys.lua")
@@ -245,12 +245,10 @@ local function verifyKeyAndUser(key, username)
         return false, nil
     end
 
-    -- Check if the key data is in array format (common for these systems)
+    -- Check if the key data is in array format
     if #keyData > 0 then
-        -- Find the specific key in the key data file
         for _, keyEntry in ipairs(keyData) do
             if keyEntry.key and keyEntry.key == key then
-                -- Check if user is whitelisted
                 if keyEntry.users and type(keyEntry.users) == "table" then
                     for _, whitelistedUser in ipairs(keyEntry.users) do
                         if string.lower(tostring(whitelistedUser)) == string.lower(username) then
@@ -262,7 +260,7 @@ local function verifyKeyAndUser(key, username)
             end
         end
     else
-        -- Alternative format check (key-value pairs)
+        -- Check if the key data is in key-value format
         if keyData[key] and keyData[key].users and type(keyData[key].users) == "table" then
             for _, whitelistedUser in ipairs(keyData[key].users) do
                 if string.lower(tostring(whitelistedUser)) == string.lower(username) then
@@ -305,7 +303,6 @@ end
 
 -- Updated button event with better error handling
 checkKeyButton.MouseButton1Click:Connect(function()
-    -- Clear any previous errors
     warn("Attempting to verify key...")
     
     keys = loadKeys()
