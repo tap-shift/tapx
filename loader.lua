@@ -3,6 +3,12 @@ local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
 local player = Players.LocalPlayer
 
+-- Fonction trim pour supprimer les espaces
+local function trim(s)
+    if not s then return "" end
+    return s:match("^%s*(.-)%s*$")
+end
+
 -- Create loader GUI
 local loaderGui = Instance.new("ScreenGui")
 loaderGui.Name = "TapXLoaderUI"
@@ -351,7 +357,8 @@ checkKeyButton.MouseButton1Click:Connect(function()
         warn("Keys database loaded successfully")
     end
     
-    local key = string.trim(keyInput.Text)
+    -- CORRECTION ICI : Utilisation de la fonction trim personnalisée
+    local key = trim(keyInput.Text)
     if key == "" then
         showNotification("Please enter a key", true)
         return
