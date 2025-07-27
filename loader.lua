@@ -10,7 +10,7 @@ loaderGui.ResetOnSpawn = false
 loaderGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 loaderGui.Parent = player:WaitForChild("PlayerGui")
 
--- Improved notification function
+-- Notification function
 local function showNotification(text, isError)
     local notif = Instance.new("Frame")
     notif.Name = "Notification"
@@ -84,7 +84,7 @@ title.Font = Enum.Font.GothamBold
 title.TextXAlignment = Enum.TextXAlignment.Left
 title.Parent = header
 
--- Close button (fixed property name)
+-- Close button
 local closeButton = Instance.new("ImageButton")
 closeButton.Name = "CloseButton"
 closeButton.AnchorPoint = Vector2.new(1, 0.5)
@@ -201,101 +201,96 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Fixed close button functionality (MouseButton1Down instead of MouseButton1Click)
-closeButton.MouseButton1Down:Connect(function()
+-- Close button functionality
+closeButton.MouseButton1Click:Connect(function()
     loaderGui:Destroy()
 end)
 
--- Improved keys loading with better error handling
+-- Load keys database with better error handling
 local keys
 local function loadKeys()
     local success, result = pcall(function()
         local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua", true)
-        if not response then
-            error("Empty response from server")
-        end
-        local loaded = loadstring(response)
-        if not loaded then
-            error("Failed to compile keys data")
-        end
-        return loaded()
+        if not response then error("Empty response from server") end
+        local func = loadstring(response)
+        if not func then error("Failed to compile keys data") end
+        return func()
     end)
     
     if not success then
-        showNotification("Failed to load keys: "..tostring(result), true)
-        warn("Failed to load keys: "..tostring(result))
+        showNotification("Failed to load keys database", true)
+        warn("Key loading error: "..tostring(result))
         return nil
     end
     return result
 end
 
--- Fixed verifyKeyAndUser function
+-- Fixed verifyKeyAndUser function (line 314)
 local function verifyKeyAndUser(key, username)
     if not keys or not keys[key] then 
-        warn("Key not found in keys.lua")
+        warn("Key not found in database")
         return false, nil 
     end
     
     local keyType = keys[key].type
+    if not keyType then
+        warn("Key has no type specified")
+        return false, nil
+    end
+    
     local scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..keyType..".lua"
     
     local success, keyData = pcall(function()
         local response = game:HttpGet(scriptUrl, true)
-        if not response then
-            error("Empty response from server")
-        end
-        local loaded = loadstring(response)
-        if not loaded then
-            error("Failed to compile key data")
-        end
-        return loaded()
+        if not response then error("Empty response from server") end
+        local func = loadstring(response)
+        if not func then error("Failed to compile key data") end
+        return func()
     end)
     
     if not success then
-        showNotification("Failed to verify key: "..tostring(keyData), true)
-        warn("Failed to load "..keyType..".lua: "..tostring(keyData))
+        showNotification("Failed to verify key", true)
+        warn("Key verification error: "..tostring(keyData))
         return false, nil
     end
     
     if not keyData or type(keyData) ~= "table" then
-        showNotification("Invalid key data format", true)
-        warn("Invalid data returned from "..keyType..".lua")
+        warn("Invalid key data format")
         return false, nil
     end
 
     -- Check both array and dictionary formats
-    local foundEntry = nil
-    
+    local keyEntry
     if #keyData > 0 then
         -- Array format
         for _, entry in ipairs(keyData) do
             if entry and entry.key == key then
-                foundEntry = entry
+                keyEntry = entry
                 break
             end
         end
     else
         -- Dictionary format
-        foundEntry = keyData[key]
+        keyEntry = keyData[key]
     end
 
-    if foundEntry and foundEntry.users and type(foundEntry.users) == "table" then
-        for _, user in ipairs(foundEntry.users) do
+    if keyEntry and keyEntry.users and type(keyEntry.users) == "table" then
+        for _, user in ipairs(keyEntry.users) do
             if string.lower(tostring(user)) == string.lower(username) then
                 return true, keyType
             end
         end
     end
     
-    warn("Key found but user not whitelisted")
+    warn("User not whitelisted for this key")
     return false, nil
 end
 
--- Improved script loading with error handling
+-- Load script version
 local function loadScriptVersion(keyType)
     if not loaderGui or not loaderGui.Parent then return end
     
-    loaderGui:Destroy() -- Remove loader UI
+    loaderGui:Destroy()
     
     local scriptUrl
     if keyType == "pro" or keyType == "eb" then
@@ -310,29 +305,28 @@ local function loadScriptVersion(keyType)
     
     local success, err = pcall(function()
         local response = game:HttpGet(scriptUrl, true)
-        if not response then
-            error("Empty response from server")
-        end
-        local loaded = loadstring(response)
-        if not loaded then
-            error("Failed to compile script")
-        end
-        loaded()
+        if not response then error("Empty response from server") end
+        local func = loadstring(response)
+        if not func then error("Failed to compile script") end
+        func()
     end)
     
     if not success then
-        showNotification("Failed to load script: "..tostring(err), true)
-        warn("Failed to load script: "..tostring(err))
+        showNotification("Failed to load script", true)
+        warn("Script loading error: "..tostring(err))
         game:GetService("Players").LocalPlayer:Kick("Failed to load script")
     end
 end
 
--- Fixed check key button (MouseButton1Down instead of MouseButton1Click)
-checkKeyButton.MouseButton1Down:Connect(function()
+-- Check key button with proper error handling
+checkKeyButton.MouseButton1Click:Connect(function()
     showNotification("Verifying key...")
     
-    keys = loadKeys()
-    if not keys then return end
+    -- Load keys if not already loaded
+    if not keys then
+        keys = loadKeys()
+        if not keys then return end
+    end
     
     local key = string.trim(keyInput.Text)
     if key == "" then
@@ -349,33 +343,29 @@ checkKeyButton.MouseButton1Down:Connect(function()
     local isValid, keyType = verifyKeyAndUser(key, username)
     
     if not isValid or not keyType then
-        showNotification("Key not whitelisted for your account", true)
+        showNotification("Key not authorized for your account", true)
         game:GetService("Players").LocalPlayer:Kick("Unauthorized license usage")
         return
     end
     
-    showNotification("Key accepted! Loading version...")
+    showNotification("Key accepted! Loading...")
     loadScriptVersion(keyType)
 end)
 
--- Fixed free version button (MouseButton1Down instead of MouseButton1Click)
-noKeyButton.MouseButton1Down:Connect(function()
+-- Free version button
+noKeyButton.MouseButton1Click:Connect(function()
     showNotification("Loading free version...")
     loaderGui:Destroy()
     local success, err = pcall(function()
         local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua", true)
-        if not response then
-            error("Empty response from server")
-        end
-        local loaded = loadstring(response)
-        if not loaded then
-            error("Failed to compile script")
-        end
-        loaded()
+        if not response then error("Empty response from server") end
+        local func = loadstring(response)
+        if not func then error("Failed to compile script") end
+        func()
     end)
     if not success then
-        showNotification("Failed to load free version: "..tostring(err), true)
-        warn("Failed to load free version: "..tostring(err))
+        showNotification("Failed to load free version", true)
+        warn("Free version error: "..tostring(err))
         game:GetService("Players").LocalPlayer:Kick("Failed to load free version")
     end
 end)
