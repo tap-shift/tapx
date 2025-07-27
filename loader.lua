@@ -211,10 +211,18 @@ local keys
 local function loadKeys()
     local success, result = pcall(function()
         local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua", true)
-        if not response then error("Empty response from server") end
+        if not response or response == "" then
+            error("Empty response from server")
+        end
         local func = loadstring(response)
-        if not func then error("Failed to compile keys data") end
-        return func()
+        if not func then
+            error("Failed to compile keys data")
+        end
+        local data = func()
+        if not data then
+            error("No data returned from keys file")
+        end
+        return data
     end)
     
     if not success then
@@ -225,37 +233,55 @@ local function loadKeys()
     return result
 end
 
--- Fixed verifyKeyAndUser function (line 314)
+-- Fixed verifyKeyAndUser function with detailed error handling
 local function verifyKeyAndUser(key, username)
-    if not keys or not keys[key] then 
-        warn("Key not found in database")
+    if not keys then
+        warn("Keys database not loaded")
+        showNotification("System error: Keys not loaded", true)
+        return false, nil
+    end
+    
+    if not keys[key] then 
+        warn("Key not found in database:", key)
+        showNotification("Invalid license key", true)
         return false, nil 
     end
     
     local keyType = keys[key].type
     if not keyType then
-        warn("Key has no type specified")
+        warn("Key has no type specified:", key)
+        showNotification("Invalid key format", true)
         return false, nil
     end
     
     local scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..keyType..".lua"
+    warn("Fetching key data from:", scriptUrl)
     
     local success, keyData = pcall(function()
         local response = game:HttpGet(scriptUrl, true)
-        if not response then error("Empty response from server") end
+        if not response or response == "" then
+            error("Empty response from server")
+        end
         local func = loadstring(response)
-        if not func then error("Failed to compile key data") end
-        return func()
+        if not func then
+            error("Failed to compile key data")
+        end
+        local data = func()
+        if not data then
+            error("No data returned from key file")
+        end
+        return data
     end)
     
     if not success then
-        showNotification("Failed to verify key", true)
+        showNotification("Failed to verify key (server error)", true)
         warn("Key verification error: "..tostring(keyData))
         return false, nil
     end
     
     if not keyData or type(keyData) ~= "table" then
-        warn("Invalid key data format")
+        showNotification("Invalid key data format", true)
+        warn("Key data format error. Received:", type(keyData))
         return false, nil
     end
 
@@ -263,30 +289,50 @@ local function verifyKeyAndUser(key, username)
     local keyEntry
     if #keyData > 0 then
         -- Array format
-        for _, entry in ipairs(keyData) do
-            if entry and entry.key == key then
+        warn("Checking array format keys ("..#keyData.." entries)")
+        for i, entry in ipairs(keyData) do
+            if entry and entry.key and entry.key == key then
                 keyEntry = entry
+                warn("Found matching key at index", i)
                 break
             end
         end
     else
         -- Dictionary format
+        warn("Checking dictionary format keys")
         keyEntry = keyData[key]
     end
 
-    if keyEntry and keyEntry.users and type(keyEntry.users) == "table" then
-        for _, user in ipairs(keyEntry.users) do
-            if string.lower(tostring(user)) == string.lower(username) then
-                return true, keyType
-            end
+    if not keyEntry then
+        warn("No matching key entry found in data")
+        showNotification("Key verification failed", true)
+        return false, nil
+    end
+
+    if not keyEntry.users or type(keyEntry.users) ~= "table" then
+        warn("Key has no valid users list")
+        showNotification("Invalid key configuration", true)
+        return false, nil
+    end
+
+    -- Check whitelist
+    local lowerUsername = string.lower(username)
+    warn("Checking whitelist for:", lowerUsername)
+    warn("Whitelisted users:", table.concat(keyEntry.users, ", "))
+    
+    for _, user in ipairs(keyEntry.users) do
+        if string.lower(tostring(user)) == lowerUsername then
+            warn("User found in whitelist")
+            return true, keyType
         end
     end
     
-    warn("User not whitelisted for this key")
+    warn("User not in whitelist")
+    showNotification("Key not authorized for your account", true)
     return false, nil
 end
 
--- Load script version
+-- Load script version with error handling
 local function loadScriptVersion(keyType)
     if not loaderGui or not loaderGui.Parent then return end
     
@@ -303,11 +349,16 @@ local function loadScriptVersion(keyType)
         return
     end
     
+    warn("Loading script from:", scriptUrl)
     local success, err = pcall(function()
         local response = game:HttpGet(scriptUrl, true)
-        if not response then error("Empty response from server") end
+        if not response or response == "" then
+            error("Empty response from server")
+        end
         local func = loadstring(response)
-        if not func then error("Failed to compile script") end
+        if not func then
+            error("Failed to compile script")
+        end
         func()
     end)
     
@@ -324,8 +375,12 @@ checkKeyButton.MouseButton1Click:Connect(function()
     
     -- Load keys if not already loaded
     if not keys then
+        warn("Loading keys database...")
         keys = loadKeys()
-        if not keys then return end
+        if not keys then 
+            return 
+        end
+        warn("Keys database loaded successfully")
     end
     
     local key = string.trim(keyInput.Text)
@@ -334,20 +389,23 @@ checkKeyButton.MouseButton1Click:Connect(function()
         return
     end
     
+    warn("Checking key:", key)
     if not keys[key] then
         showNotification("Invalid key", true)
+        warn("Key not found in database")
         return
     end
     
     local username = player.Name
+    warn("Verifying user:", username)
+    
     local isValid, keyType = verifyKeyAndUser(key, username)
     
     if not isValid or not keyType then
-        showNotification("Key not authorized for your account", true)
-        game:GetService("Players").LocalPlayer:Kick("Unauthorized license usage")
         return
     end
     
+    warn("Key verification successful, type:", keyType)
     showNotification("Key accepted! Loading...")
     loadScriptVersion(keyType)
 end)
@@ -358,9 +416,13 @@ noKeyButton.MouseButton1Click:Connect(function()
     loaderGui:Destroy()
     local success, err = pcall(function()
         local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua", true)
-        if not response then error("Empty response from server") end
+        if not response or response == "" then
+            error("Empty response from server")
+        end
         local func = loadstring(response)
-        if not func then error("Failed to compile script") end
+        if not func then
+            error("Failed to compile script")
+        end
         func()
     end)
     if not success then
