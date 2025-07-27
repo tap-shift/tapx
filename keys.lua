@@ -30,11 +30,11 @@ return {
         }
     },
     
-    -- EB keys data
+    -- Early Buyer keys data
     eb = {
         {
-            key = "TAPX-EB-1111",
-            users = {"Player1", "Player2", "Player3"}
+            key = "JordansKey",
+            users = {"Stewie5129", "Player2", "Player3"}
         },
         {
             key = "TAPX-EB-2222",
@@ -46,7 +46,7 @@ return {
         }
     },
     
-    -- EU keys data
+    -- Early User keys data
     eu = {
         {
             key = "TAPX-EU-4444",
