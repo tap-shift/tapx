@@ -122,7 +122,7 @@ version.Position = UDim2.new(0, title.TextBounds.X + 32, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
-version.Text = "v1.8"
+version.Text = "v1.5"
 version.TextColor3 = Color3.fromRGB(180, 180, 180)
 version.TextSize = 16
 version.Font = Enum.Font.Gotham
@@ -187,7 +187,14 @@ pageScroller.Parent = pageContainer
 
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.9, 0, 0, 500)
+    mainFrame.Size = UDim2.new(0.95, 0, 0.8, 0)
+    -- Also adjust sidebar width for mobile
+    sidebar.Size = UDim2.new(0, 100, 1, -50)
+    pageContainer.Position = UDim2.new(0, 110, 0, 50)
+    pageContainer.Size = UDim2.new(1, -110, 1, -50)
+    -- Make text smaller on mobile
+    title.TextSize = 16
+    version.TextSize = 14
 end
 
 -- Dragging functionality
