@@ -17,15 +17,15 @@ return {
     -- Pro keys data
     pro = {
         {
-            key = "TAPX-PRO-7777",
+            key = "TAPX-PRO-7777",  -- GIVEN TO FRITE FOR TESTING
             users = {"urskid11"}
         },
         {
-            key = "TAPX-PRO-8888",
+            key = "TAPX-PRO-8888",  -- DEV TEST KEY 1
             users = {"rivalenMeisterPro"}
         },
         {
-            key = "TAPX-PRO-9999",
+            key = "TAPX-PRO-9999",  -- DEV TEST KEY 2
             users = {"Steven1234wth2"}
         }
     },
@@ -33,7 +33,7 @@ return {
     -- Early Buyer keys data
     eb = {
         {
-            key = "JordansKey",
+            key = "JordansKey", -- GIVEN TO JORDAN FOR PARTNERING
             users = {"Stewie5129", "RayfieldRemake", "Player3"}
         },
         {
