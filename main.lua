@@ -187,11 +187,11 @@ pageScroller.Parent = pageContainer
 
 -- Mobile responsiveness
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.95, 0, 0.8, 0)
+    mainFrame.Size = UDim2.new(0.85, 0, 0.8, 0)
     -- Also adjust sidebar width for mobile
-    sidebar.Size = UDim2.new(0, 100, 1, -50)
-    pageContainer.Position = UDim2.new(0, 110, 0, 50)
-    pageContainer.Size = UDim2.new(1, -110, 1, -50)
+    sidebar.Size = UDim2.new(0, 90, 1, -50)
+    pageContainer.Position = UDim2.new(0, 100, 0, 50)
+    pageContainer.Size = UDim2.new(1, -100, 1, -50)
     -- Make text smaller on mobile
     title.TextSize = 16
     version.TextSize = 14
