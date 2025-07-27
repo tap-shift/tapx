@@ -233,7 +233,7 @@ local function loadKeys()
     return result
 end
 
--- Fixed verifyKeyAndUser function with detailed error handling
+-- Updated verifyKeyAndUser function for the new keys.lua structure
 local function verifyKeyAndUser(key, username)
     if not keys then
         warn("Keys database not loaded")
@@ -241,86 +241,54 @@ local function verifyKeyAndUser(key, username)
         return false, nil
     end
     
-    if not keys[key] then 
+    -- Check if key exists in database
+    if not keys.keys or not keys.keys[key] then 
         warn("Key not found in database:", key)
         showNotification("Invalid license key", true)
         return false, nil 
     end
     
-    local keyType = keys[key].type
+    -- Get key type
+    local keyType = keys.keys[key].type
     if not keyType then
         warn("Key has no type specified:", key)
         showNotification("Invalid key format", true)
         return false, nil
     end
     
-    local scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/main/"..keyType..".lua"
-    warn("Fetching key data from:", scriptUrl)
-    
-    local success, keyData = pcall(function()
-        local response = game:HttpGet(scriptUrl, true)
-        if not response or response == "" then
-            error("Empty response from server")
-        end
-        local func = loadstring(response)
-        if not func then
-            error("Failed to compile key data")
-        end
-        local data = func()
-        if not data then
-            error("No data returned from key file")
-        end
-        return data
-    end)
-    
-    if not success then
-        showNotification("Failed to verify key (server error)", true)
-        warn("Key verification error: "..tostring(keyData))
+    -- Get the key data from the combined file
+    local keyData = keys[keyType]
+    if not keyData then
+        warn("No data found for key type:", keyType)
+        showNotification("Invalid key type configuration", true)
         return false, nil
     end
     
-    if not keyData or type(keyData) ~= "table" then
-        showNotification("Invalid key data format", true)
-        warn("Key data format error. Received:", type(keyData))
-        return false, nil
-    end
-
-    -- Check both array and dictionary formats
-    local keyEntry
-    if #keyData > 0 then
-        -- Array format
-        warn("Checking array format keys ("..#keyData.." entries)")
-        for i, entry in ipairs(keyData) do
-            if entry and entry.key and entry.key == key then
-                keyEntry = entry
-                warn("Found matching key at index", i)
-                break
-            end
+    -- Search for matching key in data
+    local foundEntry
+    for _, entry in ipairs(keyData) do
+        if entry and entry.key and entry.key == key then
+            foundEntry = entry
+            break
         end
-    else
-        -- Dictionary format
-        warn("Checking dictionary format keys")
-        keyEntry = keyData[key]
     end
 
-    if not keyEntry then
+    if not foundEntry then
         warn("No matching key entry found in data")
         showNotification("Key verification failed", true)
         return false, nil
     end
 
-    if not keyEntry.users or type(keyEntry.users) ~= "table" then
+    -- Verify users list
+    if not foundEntry.users or type(foundEntry.users) ~= "table" then
         warn("Key has no valid users list")
         showNotification("Invalid key configuration", true)
         return false, nil
     end
 
-    -- Check whitelist
+    -- Check if user is whitelisted
     local lowerUsername = string.lower(username)
-    warn("Checking whitelist for:", lowerUsername)
-    warn("Whitelisted users:", table.concat(keyEntry.users, ", "))
-    
-    for _, user in ipairs(keyEntry.users) do
+    for _, user in ipairs(foundEntry.users) do
         if string.lower(tostring(user)) == lowerUsername then
             warn("User found in whitelist")
             return true, keyType
@@ -390,7 +358,7 @@ checkKeyButton.MouseButton1Click:Connect(function()
     end
     
     warn("Checking key:", key)
-    if not keys[key] then
+    if not keys.keys[key] then
         showNotification("Invalid key", true)
         warn("Key not found in database")
         return
