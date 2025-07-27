@@ -220,7 +220,7 @@ local function loadKeys()
     return result
 end
 
--- Check if user is whitelisted for a specific key and get key type
+-- Updated verifyKeyAndUser function with better error handling
 local function verifyKeyAndUser(key, username)
     if not keys or not keys[key] then 
         warn("Key not found in keys.lua")
@@ -240,24 +240,35 @@ local function verifyKeyAndUser(key, username)
         return false, nil
     end
     
-    if not keyData then
-        warn("No data returned from "..keyType..".lua")
+    if not keyData or type(keyData) ~= "table" then
+        warn("Invalid data returned from "..keyType..".lua")
         return false, nil
     end
 
-    -- Debug print to verify key data structure
-    warn("Key data retrieved:", keyData)
-
-    -- Find the specific key in the key data file
-    for _, keyEntry in ipairs(keyData) do
-        if keyEntry.key == key then
-            -- Check if user is whitelisted
-            for _, whitelistedUser in ipairs(keyEntry.users) do
-                if string.lower(whitelistedUser) == string.lower(username) then
+    -- Check if the key data is in array format (common for these systems)
+    if #keyData > 0 then
+        -- Find the specific key in the key data file
+        for _, keyEntry in ipairs(keyData) do
+            if keyEntry.key and keyEntry.key == key then
+                -- Check if user is whitelisted
+                if keyEntry.users and type(keyEntry.users) == "table" then
+                    for _, whitelistedUser in ipairs(keyEntry.users) do
+                        if string.lower(tostring(whitelistedUser)) == string.lower(username) then
+                            return true, keyType
+                        end
+                    end
+                end
+                break
+            end
+        end
+    else
+        -- Alternative format check (key-value pairs)
+        if keyData[key] and keyData[key].users and type(keyData[key].users) == "table" then
+            for _, whitelistedUser in ipairs(keyData[key].users) do
+                if string.lower(tostring(whitelistedUser)) == string.lower(username) then
                     return true, keyType
                 end
             end
-            break
         end
     end
     
