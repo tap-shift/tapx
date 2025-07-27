@@ -249,7 +249,7 @@ local Bypasser = nil
 
 local function loadLib()
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/lib.lua"))()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/pro/main.lua"))()
     end)
     
     if not success then
@@ -263,7 +263,7 @@ end
 -- Individual page load functions
 local function loadBypasserPage(frame, bypasser)
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/bypasser.lua"))()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/pro/bypasser.lua"))()
     end)
     
     if not success then
@@ -276,7 +276,7 @@ end
 
 local function loadHistoryPage(frame, bypasser)
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/history.lua"))()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/pro/history.lua"))()
     end)
     
     if not success then
@@ -289,7 +289,7 @@ end
 
 local function loadSettingsPage(frame, bypasser)
     local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/settings.lua"))()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/pro/settings.lua"))()
     end)
     
     if not success then
