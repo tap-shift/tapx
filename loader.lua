@@ -1,1 +1,979 @@
---[[ v1.0.0 https://wearedevs.net/obfuscator ]] return(function(...)local j={"\054\055\057\082\049\088\108\068\090\080\054\116\115\055\090\088";"\081\098\100\082","\056\111\051\109\108\101\053\061","\117\083\055\089\080\074\067\054\056\081\103\108\111\050\051\118\077\085\109\122\072\055\112\082\071\080\101\112\110\085\061\061","\050\076\103\071\108\117\077\075\050\103\061\061","\078\074\066\088\073\105\061\061","\089\121\087\047\084\085\061\061";"\085\076\067\112\089\120\043\114\121\079\110\112\120\079\057\068\082\051\077\047\099\047\085\074\083\051\089\080\088\083\079\102\085\120\100\109";"\085\073\050\106\122\114\090\061","\102\075\050\073\097\057\101\114\106\070\086\061","\065\047\077\089\070\074\115\089\099\073\103\073\051\122\105\070\104\047\086\103\086\078\049\122\097\071\112\119\099\075\071\070\111\109\108\071\086\079\052\118\084\117\054\072\074\085\086\061";"\085\083\100\082\082\055\084\104\070\120\052\089\107\111\112\105\090\086\080\108\104\070\080\103\067\056\089\104\118\084\053\061";"\105\043\117\066\050\085\061\061","\115\067\066\082\057\074\068\090\057\106\111\074\065\069\057\112\049\067\086\061","\121\084\052\106\099\066\108\113\050\081\083\076\084\110\087\088\050\105\061\061","\078\074\051\102\078\101\111\076\108\056\083\061","\101\103\061\061","\048\088\111\090";"\073\088\097\114\106\086\075\108\121\079\052\076\106\069\057\116\108\079\053\061";"\098\116\051\121\090\103\061\061","\043\072\121\103\099\087\079\080\114\100\075\074\111\114\086\073\054\069\100\118\067\067\116\073\104\107\122\056\087\066\102\081\082\086\098\074";"\073\079\099\075\073\111\057\122\115\110\085\116\121\069\111\079\057\101\109\061";"\115\074\067\102";"\117\108\106\115\065\047\079\073\087\110\121\061","\081\115\113\087\112\081\104\048\087\090\068\053\114\115\070\103";"\056\056\083\082\069\080\074\066","\052\119\057\056";"\122\112\097\071\090\056\054\071";"\117\100\082\108\086\090\048\117\084\047\090\087\068\119\050\111\079\070\121\066\073\073\079\084";"\111\104\104\068\102\048\088\115","\043\105\061\061","\119\084\079\112\101\113\104\065\067\083\055\088\054\078\051\050\111\057\101\081\081\122\061\061";"\079\122\078\102";"\066\047\084\120\078\110\050\122\101\117\122\097\097\107\103\061";"\106\106\067\048\121\111\054\086\049\079\099\069\054\079\111\120","\121\072\071\076\068\099\088\122\084\076\081\111\115\108\070\104\090\075\104\120\055\099\072\049\049\122\061\061";"\088\122\121\050\081\120\118\109\071\081\120\075\066\097\122\057\048\054\097\057\078\048\103\090\080\108\079\114\116\106\098\077";"\100\117\079\054\112\100\110\101";"\115\072\077\086\049\103\061\061","\108\057\051\080\078\078\082\057\119\116\114\066\117\085\061\061","\057\048\077\080\065\069\067\055\057\066\118\048\078\071\122\116\057\055\083\061","\067\067\054\068\054\111\068\099\065\084\097\075\073\079\075\090","\109\066\051\098\080\084\105\110\085\109\103\061","\105\104\078\055\121\068\086\113\100\083\118\051\066\073\099\053\086\071\111\043\047\103\061\061";"\089\048\084\118\080\099\048\101\076\047\079\115\087\112\106\087","\115\101\066\116\073\085\061\061","\048\118\086\056\054\085\061\061";"\088\101\051\074";"\071\087\069\051","\115\086\057\053\106\088\066\122\108\080\086\088\090\088\057\086\047\071\086\061";"\082\071\109\054\098\075\073\119\121\122\061\061";"\086\074\048\117\054\111\111\117\072\085\061\061","\117\071\104\084\086\072\111\071\057\075\121\061";"\050\055\121\080\106\069\067\048\057\074\057\087\057\116\078\087\078\074\106\061";"\114\086\067\072\082\085\061\061";"\082\070\074\082\086\120\090\053\099\097\103\048\077\084\106\105\068\110\083\061","\090\085\090\114\072\102\048\101\080\087\047\054\106\071\116\061";"\121\080\067\116\115\101\067\116\090\056\054\068\090\079\099\071","\119\053\048\110\076\107\117\071";"\056\111\051\052\108\056\054\068\078\074\066\076\115\074\106\061","\057\069\068\099\078\087\057\068\106\086\078\083\057\074\111\074\110\085\061\061","\075\086\102\121\112\072\053\053","\083\047\119\056\098\107\090\061";"\079\076\111\067\073\068\105\080\082\106\052\106\088\054\101\073\074\115\109\103\100\056\099\054\047\119\086\099\089\120\106\061","\120\119\051\114\110\053\080\074\067\069\056\073\072\072\088\089\098\082\104\121\080\099\122\061";"\089\054\069\103\114\122\061\061";"\098\115\109\070\120\071\097\055\050\052\055\110\068\065\119\106\107\122\061\061";"\104\119\075\043\076\068\071\076\050\068\109\061";"\073\106\057\106\115\122\061\061";"\081\106\118\086\086\066\090\048\098\109\082\108\090\070\084\069\065\103\061\061";"\070\113\051\118\099\118\099\073\116\088\043\074\067\103\099\066\056\106\088\107\097\097\097\067\116\069\047\057\068\103\061\061","\075\080\070\069","\107\050\121\072\102\101\106\108\047\113\122\061","\055\079\104\065","\098\099\051\115\088\102\075\103\076\122\061\061";"\089\049\074\052\085\086\055\050","\122\052\100\116\085\048\109\043\099\107\085\082\117\122\120\048\050\049\121\061";"\065\084\065\082";"\101\081\053\048";"\054\101\113\067\048\100\080\111";"\071\074\074\078\102\080\073\049","\105\068\052\056";"\108\105\061\061";"\119\051\114\076\050\108\069\061";"\083\057\107\085\102\054\107\101\106\110\111\066\119\051\121\052\110\103\061\061";"\070\047\102\116\097\052\081\107\048\113\080\117\099\079\078\109","\081\104\081\114\066\121\065\054\097\083\053\073\112\068\079\067\107\101\070\077\051\067\082\057\066\112\080\107\122\119\086\061";"\050\103\061\061","\101\085\088\106\052\079\114\068","\100\089\086\076\078\103\061\061";"\056\089\110\049\102\047\048\119\122\103\061\061";"\108\112\057\111\090\103\061\061";"\050\083\120\068\066\068\051\116\116\075\073\072\113\085\061\061","\071\074\107\067\121\087\105\061";"\115\055\083\061";"\115\079\054\090\122\088\057\056\065\084\097\100\049\088\108\110\067\079\047\061","\090\116\054\066\065\089\108\066";"\086\087\082\116\090\077\108\067\120\086\047\061";"\104\097\113\087";"\050\109\070\115\088\052\069\061","\078\104\105\068\071\071\053\061","\081\116\082\098\115\119\053\110\048\076\085\061","\080\052\112\100";"\114\049\075\104\081\050\109\075\054\089\117\056\071\071\069\061";"\087\104\101\100";"\069\049\065\121","\056\048\112\114\090\109\065\118\112\118\078\052\054\077\043\067\055\102\104\109\075\098\086\061","\047\066\122\073\069\072\070\070\067\097\087\108\117\087\073\086\054\099\102\118\052\072\078\089\099\119\109\061","\085\113\074\056\067\090\109\061";"\113\107\105\090\055\067\071\080\070\116\072\102\054\100\100\073\104\105\061\061","\054\069\118\086\102\054\051\054\084\102\115\085\053\085\103\061";"\090\080\068\068\121\103\061\061";"\082\050\112\097\085\051\050\102";"\068\122\075\069\086\071\121\061";"\078\074\066\076\115\074\106\061";"\048\081\109\076\070\109\098\080\051\105\061\061","\113\119\089\115\083\112\057\066\109\098\120\043\067\052\090\061";"\043\077\088\078\081\066\071\074\076\078\055\104\112\055\117\108\052\071\108\043\119\051\079\053\051\086\049\110\084\086\076\117","\083\071\071\076\069\051\069\115\085\053\067\119\065\080\054\048\102\071\053\061";"\106\056\113\118\050\043\103\070\100\109\070\085\114\112\106\075\103\105\086\061","\066\120\109\056\073\049\072\050\087\067\100\115\102\079\115\119\089\117\104\053","\115\101\066\116\090\080\103\061","\050\109\106\106\067\088\075\066\072\049\084\083\057\118\053\087\069\105\101\099\102\085\061\061","\087\084\105\103\112\115\111\081","\108\079\099\114\115\112\083\061";"\068\084\048\052","\076\101\074\099\110\115\047\109\051\085\061\061","\054\074\067\088\078\048\097\114\065\122\061\061","\098\043\070\075\048\057\072\105\114\047\071\109\114\100\121\061";"\101\054\099\084\106\080\087\072\120\073\121\068","\087\119\083\084\067\089\089\081\117\110\065\101\090\072\068\083";"\086\068\108\075\106\050\053\061","\066\107\079\047\070\050\080\089\106\072\078\048\081\118\071\066\105\047\119\056";"\073\119\087\072\066\052\102\090\048\105\061\061","\057\099\116\075\065\055\103\106\106\054\069\066\115\098\103\061";"\050\067\057\076\090\079\071\056\057\080\068\076\108\048\071\077\054\103\061\061","\113\122\086\072\115\100\077\069";"\087\110\097\050\099\067\083\104\107\069\088\080\102\122\061\061";"\083\097\065\103\082\054\073\052\052\105\061\061","\097\085\090\079\048\085\061\061","\073\056\118\068\073\056\097\088";"\120\049\077\068","\043\102\081\090","\054\111\054\099\090\067\122\105\122\101\108\054\073\111\121\111\121\074\121\061","\067\112\068\057\050\106\057\073\057\112\057\109\073\069\078\117\065\079\069\061";"\050\112\068\088","\071\055\066\115\081\118\087\076\116\086\108\077\090\073\113\116\100\105\072\110\076\047\053\108\088\052\121\085\077\085\061\061";"\051\048\121\078\051\081\077\075\120\051\073\069\072\104\067\065\086\085\061\061","\089\084\086\061";"\072\057\070\089\077\073\077\069\102\056\104\102","\104\118\101\121\066\049\043\114\067\120\088\090\090\068\088\069\105\085\081\118\073\071\053\066\080\043\112\056";"\071\068\075\079";"\090\082\052\111\097\103\052\075\065\057\043\070\081\099\065\066\084\085\111\047\049\116\116\048\047\116\122\105\083\074\082\088\055\065\112\076";"\106\118\121\070\099\105\061\061";"\108\051\082\053\102\116\085\119\088\121\103\081\098\120\114\115\114\100\110\070\066\114\100\079\082\109\070\090\087\103\061\061","\114\113\073\047\075\102\051\047\118\112\083\113\111\076\090\101";"\103\107\056\047\069\103\061\061";"\105\067\103\102\067\106\102\053","\066\098\115\075\116\105\061\061","\114\110\072\121\057\108\074\113\119\090\083\061";"\112\100\051\113\047\047\055\080";"\054\101\120\111\115\122\061\061";"\065\110\097\069\067\088\118\099\106\112\066\116\067\067\121\111";"\054\074\071\088\090\080\051\102\115\079\067\087\078\085\061\061","\049\083\119\055\116\085\061\061","\070\112\102\102\084\109\090\061","\055\120\067\076","\073\051\054\070\076\122\061\061";"\048\102\119\052\051\111\048\086";"\115\087\080\053\121\114\083\112\107\097\109\066\113\105\061\061";"\084\080\047\089\088\105\061\061","\085\090\065\081\068\098\112\050","\076\115\111\048\105\118\056\114\106\088\043\103\121\102\067\121\078\052\068\089\099\098\111\100\106\078\099\106\106\065\069\116\106\098\078\083\075\067\086\097\088\103\061\061";"\075\110\077\090\067\074\084\117\065\055\051\054\111\053\083\061";"\121\048\067\075\050\048\075\076\078\080\057\108\121\084\075\097";"\116\107\068\109\086\065\052\078\120\086\075\049\118\050\076\103\068\107\069\052\108\051\053\061","\112\112\077\050\101\072\120\071\115\048\086\105";"\073\048\075\106\108\066\071\117\067\080\066\110\122\112\068\106\065\101\116\061";"\121\079\066\102\108\074\051\052";"\122\050\117\122\112\052\102\112\112\054\086\061","\081\055\105\083\047\117\082\077\097\086\121\051\043\122\061\061";"\055\078\113\075\056\105\071\104\086\122\108\053\119\086\052\057\111\108\105\061";"\098\051\077\054\117\084\080\043\088\079\114\066\118\066\115\077\054\085\061\061","\049\104\071\109\084\111\098\078\088\097\103\061";"\054\050\101\118";"\048\106\099\070\108\105\083\056","\098\069\106\119\097\068\069\104\082\069\071\067\113\080\106\098\068\051\104\103\065\078\052\050\085\111\121\061","\067\080\066\075\078\069\108\114\121\086\057\077\073\101\099\086";"\081\067\050\102\052\067\114\108\107\112\084\053\081\053\097\101\109\100\105\043";"\086\107\077\119\043\053\075\087\043\079\074\051\090\088\108\099\100\072\108\086\118\080\112\070\076\069\100\105","\099\078\071\080\075\118\069\120\108\105\061\061","\053\069\082\078","\116\112\078\075\114\119\103\102\057\105\061\061","\108\080\111\068\078\074\057\077";"\073\086\116\043\106\056\057\116\067\066\083\105\090\087\047\043\078\069\105\061";"\090\079\052\069\065\086\068\068\108\088\083\099\110\086\120\069\108\105\061\061","\073\072\053\070\047\065\112\102";"\043\077\103\047\089\065\069\061","\050\103\069\050\043\071\088\079\072\089\109\080\108\118\090\110","\075\103\067\043","\121\069\108\083\078\111\054\080\054\110\118\117\115\116\108\090";"\049\048\054\116\121\069\078\071\078\085\061\061","\065\101\111\067\106\111\085\105\067\106\120\072\067\110\068\106";"\109\076\085\109";"\103\050\057\050\070\080\089\080","\108\118\074\116\097\065\090\056\103\073\075\118\049\120\055\099\055\090\055\086\047\054\047\103\087\111\102\103\122\075\098\057\080\106\055\054","\090\080\051\102\090\080\066\116","\115\106\057\067\110\116\116\111\121\079\075\052\121\106\078\068\090\080\103\061","\106\087\099\114\102\103\061\061","\114\108\122\081\076\115\077\061";"\088\113\077\107\097\122\061\061";"\106\109\086\120\048\048\089\089\076\100\089\088\084\103\061\061","\057\086\097\077\078\066\122\111\106\066\054\116\121\071\054\048\073\103\061\061","\102\108\069\069\088\101\071\067\070\053\112\113\057\102\056\116\109\065\083\077\081\048\086\073\082\120\049\083\109\100\081\090\068\070\081\071\080\068\102\071\109\067\066\108\069\122\061\061";"\051\070\065\090\049\056\089\108\053\066\117\053\065\069\098\067\118\116\054\090\106\077\056\087\070\053\069\061";"\054\086\071\100\102\088\057\073\106\066\071\089\073\068\110\055\078\100\102\121\106\120\053\048","\071\082\117\089\065\053\100\068\114\073\121\061";"\087\122\081\080\085\090\052\081\121\111\047\061","\067\106\054\075\115\110\083\061";"\069\073\108\052\049\090\113\086\056\107\109\061";"\097\069\121\089";"\122\080\051\102\115\079\067\087\078\085\061\061";"\067\104\076\057\083\082\082\086\121\065\077\061";"\043\048\105\052\081\106\047\061";"\087\107\108\047","\085\084\087\054\099\053\120\084\119\088\065\078\097\101\112\080\097\116\115\066\052\098\099\082\105\116\115\109\048\050\101\116\085\110\089\120\055\067\048\090\120\084\074\079";"\078\084\068\111\110\103\061\061","\050\069\120\054\067\048\122\080\057\067\078\071\078\080\105\116";"\101\097\076\070","\054\117\086\119\112\105\061\061","\106\066\075\048\110\112\068\109\047\066\097\052\108\085\061\061","\089\112\114\080";"\068\114\068\102\069\070\080\053\116\090\106\080\083\120\050\121\052\088\104\070\116\101\076\082\056\080\066\076\101\103\061\061";"\079\054\120\084\085\085\061\061","\070\109\121\084\070\103\061\061";"\055\112\109\117\108\085\061\061","\108\055\077\111\078\108\104\111\080\050\056\073\121\051\105\061";"\098\083\089\120\113\073\089\072\083\082\049\076\079\110\102\108\051\088\100\083\054\088\082\113\112\119\090\114\106\069\099\052\102\084\047\043";"\108\113\114\099\118\089\110\057\119\107\055\072\047\071\057\076\111\122\061\061","\090\084\071\116\108\122\061\061";"\043\050\090\077\110\082\120\050\052\120\108\090\078\112\043\057\109\069\052\065\082\113\085\089\070\085\061\061";"\084\057\104\054";"\108\101\066\097\106\112\075\097\090\110\071\070\047\067\083\099\090\103\061\061";"\047\087\100\065\118\072\055\121\055\106\084\108\068\086\115\103\054\082\111\069\079\103\061\061";"\115\113\101\074\052\076\117\121\050\074\077\070\056\079\097\111\103\088\069\061","\074\085\056\086","\065\101\066\100\073\084\085\043\078\106\108\047\106\086\099\053\078\055\103\061","\109\103\054\074\106\086\086\067\119\100\103\057\049\107\102\050","\049\069\121\053\050\074\121\111\054\074\099\087\106\080\099\110\057\103\061\061";"\082\098\056\098\052\075\072\057\073\122\061\061";"\048\067\050\122\087\103\061\061";"\053\067\078\111\099\113\114\053\048\113\081\120\074\053\122\088\068\054\090\061","\085\084\053\065\106\099\086\069\048\082\119\081\085\097\102\112\049\110\103\047\115\102\083\083\089\076\080\072\090\105\061\061","\067\048\079\066\088\089\076\117\079\107\087\119\088\089\103\061";"\043\105\099\122\081\119\122\061";"\121\074\057\068\115\074\105\061","\107\079\106\072\106\057\078\117\098\087\107\057\120\097\043\073\103\122\061\061";"\054\066\108\079\115\116\111\106\101\101\111\107\106\069\108\048\049\085\061\061","\119\101\054\051\098\105\061\061","\047\115\101\084\050\050\055\051\122\104\090\061";"\107\111\120\073\118\051\089\056\109\087\083\086\069\048\051\076\112\114\072\086\122\052\102\122\118\105\048\084\122\117\113\097\108\076\083\075\082\105\061\061","\075\099\066\115\081\053\104\085\047\110\054\113\108\085\086\076\122\053\103\056\050\105\061\061";"\090\055\048\055\053\085\061\061";"\065\121\083\099\115\103\061\061","\048\117\102\115";"\112\113\071\050","\108\083\117\067\101\072\106\072\086\098\076\073\076\075\085\097\081\077\077\083\101\103\061\061";"\106\073\108\082\120\097\077\069\099\083\069\101\047\097\050\077\069\089\122\061","\066\108\054\101\121\075\055\101";"\057\067\106\112\057\110\066\048\050\055\057\084\047\086\051\077";"\114\068\081\117\101\082\049\098\084\097\106\061";"\108\054\114\115\066\077\071\102\081\115\079\070\118\067\069\104\055\076\112\117\101\105\061\061","\090\052\077\071\099\115\081\107\072\090\089\054\051\102\107\069\043\085\073\109\056\076\114\114\119\072\090\057\047\084\112\043\071\065\090\061";"\065\056\066\053\054\105\061\061";"\121\112\054\043\073\101\120\084","\117\051\054\106\084\117\068\089\114\054\100\076\099\115\049\100","\065\048\066\071\065\048\068\113\073\048\118\050\050\066\077\105\065\086\109\061","\107\116\116\101\107\105\068\069\068\069\098\057\076\073\079\080","\070\099\085\090\070\105\061\061","\115\074\051\068\108\048\057\116\121\079\071\102\108\105\061\061";"\048\102\082\120\072\073\118\081\122\052\073\108\078\085\061\061","\122\080\051\109\115\112\083\088","\055\111\070\050\051\102\109\048\105\108\066\056\107\106\080\103\107\103\061\061";"\099\120\087\098\104\105\061\061","\115\097\106\043\049\080\083\106\079\075\074\099","\078\048\071\105\108\122\061\061","\070\048\048\082";"\101\113\074\075\066\105\061\061";"\085\067\113\105\106\085\061\061";"\087\103\121\078\084\054\104\050\097\122\061\061";"\120\106\052\056\090\043\078\051\071\111\047\061","\108\056\097\043\115\112\083\061","\068\100\049\085","\121\105\061\061";"\081\117\048\114\117\103\061\061","\051\068\105\073\099\074\089\073","\117\118\097\087";"\110\116\043\109\114\085\061\061","\103\085\067\087";"\065\067\077\043\090\112\075\108\047\055\071\054\110\066\078\113\108\105\061\061";"\070\071\072\106\047\088\111\087\119\085\061\061";"\112\090\051\070\122\053\114\120\104\075\074\050\105\054\057\077\110\072\103\082\069\052\097\110\049\106\109\054\089\075\109\099";"\097\122\061\061","\087\087\082\101";"\049\065\071\111","\122\082\097\108\117\103\061\061";"\080\119\111\047\112\084\106\049\099\103\047\061";"\110\075\105\100\072\076\077\061","\119\103\071\120\101\085\061\061","\078\084\097\066\108\056\086\112\115\086\098\080\121\116\075\122\057\116\047\061","\078\074\051\088\078\048\097\075\115\079\121\061";"\081\078\069\082\115\101\070\083\089\068\115\049\057\073\122\111\069\066\112\086\052\085\085\089\105\073\084\057\111\105\061\061","\081\079\047\061","\047\080\047\109\065\079\055\054","\056\122\111\076","\122\101\057\054\067\116\053\112\067\056\071\055\115\112\054\076","\078\115\074\119\056\103\122\061";"\090\076\103\065\118\073\115\104";"\071\104\105\066\076\085\061\061","\090\057\077\072","\057\080\071\049\073\086\120\052\047\111\057\090\121\110\118\048\073\122\061\061";"\076\103\086\104","\067\106\054\075\115\122\061\061","\055\071\076\103\108\089\068\068\051\088\085\083\108\119\068\084\049\070\088\049\080\049\103\100\068\106\051\050\105\083\077\117","\118\065\043\101\100\105\061\061","\082\048\103\073\054\052\085\051\109\079\056\049";"\078\101\120\105\090\101\057\072","\047\111\047\121\057\057\106\104\075\081\052\055\067\115\073\119\082\107\070\113\073\103\061\061","\115\116\097\057\121\110\118\082\067\056\108\114\090\079\066\112\121\103\061\061";"\121\112\054\068\121\084\054\050\115\112\054\075\108\079\071\087\090\056\054\075\115\080\120\106\073\101\111\071\121\103\061\061";"\066\073\110\047\087\055\108\082\055\086\103\067\052\099\112\097\047\055\055\048\077\067\100\056\055\043\111\069\109\113\114\113";"\099\088\101\122\086\103\043\056\116\085\119\066\105\073\076\043\050\108\088\068\112\099\083\113\120\056\080\072\115\081\118\085\113\068\047\061";"\071\066\076\119";"\118\101\120\057\050\111\101\106\105\089\074\072\068\110\084\051\057\067\098\061","\052\047\067\109\113\082\066\054\066\049\055\076\120\075\079\113\043\117\086\098\065\111\099\114\077\074\057\079\086\105\111\081\054\084\069\061","\068\117\047\117\073\101\116\061";"\048\081\071\122\104\122\061\061";"\121\079\067\052\115\112\108\071";"\073\068\080\118","\070\104\054\086\053\070\122\105\048\047\106\061";"\115\054\078\089\073\1
+local Players = game:GetService("Players")
+
+local UserInputService = game:GetService("UserInputService")
+
+local TweenService = game:GetService("TweenService")
+
+local player = Players.LocalPlayer
+
+
+
+-- Fonction trim pour supprimer les espaces
+
+local function trim(s)
+
+    if not s then return "" end
+
+    return s:match("^%s*(.-)%s*$")
+
+end
+
+
+
+-- Create loader GUI
+
+local loaderGui = Instance.new("ScreenGui")
+
+loaderGui.Name = "TapXLoaderUI"
+
+loaderGui.ResetOnSpawn = false
+
+loaderGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+loaderGui.Parent = player:WaitForChild("PlayerGui")
+
+
+
+-- NEW NOTIFICATION SYSTEM ============================================
+
+local notificationQueue = {}
+
+local notificationContainer = nil
+
+
+
+-- Create notification container that's always on top
+
+local function createNotificationContainer()
+
+    if notificationContainer then return end
+
+    
+
+    notificationContainer = Instance.new("Frame")
+
+    notificationContainer.Name = "NotificationContainer"
+
+    notificationContainer.Size = UDim2.new(0, 320, 1, 0)
+
+    notificationContainer.Position = UDim2.new(1, -20, 0, 0)
+
+    notificationContainer.BackgroundTransparency = 1
+
+    notificationContainer.ZIndex = 10000 -- Always on top
+
+    notificationContainer.Parent = loaderGui
+
+end
+
+
+
+-- Update positions of all notifications
+
+local function updateNotificationPositions()
+
+    if not notificationContainer then return end
+
+    
+
+    local yOffset = 20
+
+    for i, notif in ipairs(notificationQueue) do
+
+        if notif and notif.Parent then
+
+            local targetPos = UDim2.new(1, -320, 0, yOffset)
+
+            TweenService:Create(notif, TweenInfo.new(0.2), {Position = targetPos}):Play()
+
+            yOffset = yOffset + 70
+
+        end
+
+    end
+
+end
+
+
+
+-- Remove notification from queue and update positions
+
+local function removeNotification(notif)
+
+    for i, queuedNotif in ipairs(notificationQueue) do
+
+        if queuedNotif == notif then
+
+            table.remove(notificationQueue, i)
+
+            break
+
+        end
+
+    end
+
+    
+
+    -- Animate out
+
+    TweenService:Create(notif, TweenInfo.new(0.3), {
+
+        Position = UDim2.new(1, 50, notif.Position.Y.Scale, notif.Position.Y.Offset),
+
+        BackgroundTransparency = 1
+
+    }):Play()
+
+    
+
+    -- Update remaining notifications
+
+    updateNotificationPositions()
+
+    
+
+    -- Destroy after animation
+
+    task.wait(0.3)
+
+    if notif and notif.Parent then
+
+        notif:Destroy()
+
+    end
+
+    
+
+    -- Start timer for next notification if it exists
+
+    if #notificationQueue > 0 and notificationQueue[1] then
+
+        startNotificationTimer(notificationQueue[1])
+
+    end
+
+end
+
+
+
+-- Start disappear timer for notification
+
+local function startNotificationTimer(notif)
+
+    if not notif or not notif.Parent then return end
+
+    
+
+    task.spawn(function()
+
+        task.wait(3) -- 3 second display time
+
+        if notif and notif.Parent then
+
+            removeNotification(notif)
+
+        end
+
+    end)
+
+end
+
+
+
+-- Enhanced notification function with queue management
+
+local function showNotification(text, isError)
+
+    createNotificationContainer()
+
+    
+
+    local notif = Instance.new("Frame")
+
+    notif.Name = "Notification"
+
+    notif.AnchorPoint = Vector2.new(1, 0)
+
+    notif.Size = UDim2.new(0, 300, 0, 60)
+
+    notif.BackgroundColor3 = isError and Color3.fromRGB(80, 40, 40) or Color3.fromRGB(40, 40, 50)
+
+    notif.BackgroundTransparency = 0.2
+
+    notif.ZIndex = 10001 -- Higher than container
+
+    notif.Parent = notificationContainer
+
+
+
+    local corner = Instance.new("UICorner")
+
+    corner.CornerRadius = UDim.new(0, 8)
+
+    corner.Parent = notif
+
+
+
+    local label = Instance.new("TextLabel")
+
+    label.Name = "Text"
+
+    label.Size = UDim2.new(1, -20, 1, -20)
+
+    label.Position = UDim2.new(0, 10, 0, 10)
+
+    label.BackgroundTransparency = 1
+
+    label.Text = text
+
+    label.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+    label.TextSize = 14
+
+    label.Font = Enum.Font.Gotham
+
+    label.TextXAlignment = Enum.TextXAlignment.Left
+
+    label.ZIndex = 10002
+
+    label.Parent = notif
+
+
+
+    -- Add to queue
+
+    table.insert(notificationQueue, notif)
+
+    
+
+    -- Start slide-in animation from right
+
+    notif.Position = UDim2.new(1, 50, 0, 20)
+
+    
+
+    -- Update all positions
+
+    updateNotificationPositions()
+
+    
+
+    -- If this is the first (oldest) notification, start its timer
+
+    if notificationQueue[1] == notif then
+
+        startNotificationTimer(notif)
+
+    end
+
+end
+
+-- END OF NEW NOTIFICATION SYSTEM ====================================
+
+
+
+-- Main loader frame
+
+local loaderFrame = Instance.new("Frame")
+
+loaderFrame.Name = "LoaderFrame"
+
+loaderFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+
+loaderFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+
+loaderFrame.Size = UDim2.new(0, 350, 0, 250)
+
+loaderFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+
+loaderFrame.BackgroundTransparency = 0.15
+
+loaderFrame.BorderSizePixel = 0
+
+loaderFrame.ClipsDescendants = true
+
+loaderFrame.Parent = loaderGui
+
+
+
+-- Header section (for dragging)
+
+local header = Instance.new("Frame")
+
+header.Name = "Header"
+
+header.Size = UDim2.new(1, 0, 0, 30)
+
+header.BackgroundColor3 = Color3.fromRGB(35, 35, 45)
+
+header.BorderSizePixel = 0
+
+header.Parent = loaderFrame
+
+
+
+local headerCorner = Instance.new("UICorner")
+
+headerCorner.CornerRadius = UDim.new(0, 12)
+
+headerCorner.Parent = header
+
+
+
+-- Title
+
+local title = Instance.new("TextLabel")
+
+title.Name = "Title"
+
+title.Size = UDim2.new(0.7, 0, 1, 0)
+
+title.Position = UDim2.new(0, 10, 0, 0)
+
+title.BackgroundTransparency = 1
+
+title.Text = "TAPX LOADER"
+
+title.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+title.TextSize = 16
+
+title.Font = Enum.Font.GothamBold
+
+title.TextXAlignment = Enum.TextXAlignment.Left
+
+title.Parent = header
+
+
+
+-- Close button
+
+local closeButton = Instance.new("ImageButton")
+
+closeButton.Name = "CloseButton"
+
+closeButton.AnchorPoint = Vector2.new(1, 0.5)
+
+closeButton.Position = UDim2.new(1, -10, 0.5, 0)
+
+closeButton.Size = UDim2.new(0, 20, 0, 20)
+
+closeButton.BackgroundTransparency = 1
+
+closeButton.Image = "rbxassetid://3926305904"
+
+closeButton.ImageRectOffset = Vector2.new(284, 4)
+
+closeButton.ImageRectSize = Vector2.new(24, 24)
+
+closeButton.ImageColor3 = Color3.fromRGB(200, 200, 200)
+
+closeButton.Parent = header
+
+
+
+-- Key input section
+
+local keyInput = Instance.new("TextBox")
+
+keyInput.Name = "KeyInput"
+
+keyInput.Position = UDim2.new(0.1, 0, 0.3, 30)
+
+keyInput.Size = UDim2.new(0.8, 0, 0, 40)
+
+keyInput.PlaceholderText = "Enter your license key..."
+
+keyInput.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+
+keyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+keyInput.TextSize = 14
+
+keyInput.Font = Enum.Font.Gotham
+
+keyInput.Parent = loaderFrame
+
+
+
+local noKeyButton = Instance.new("TextButton")
+
+noKeyButton.Name = "NoKeyButton"
+
+noKeyButton.Position = UDim2.new(0.1, 0, 0.5, 30)
+
+noKeyButton.Size = UDim2.new(0.8, 0, 0, 20)
+
+noKeyButton.BackgroundTransparency = 1
+
+noKeyButton.Text = "I don't have a key (free version)"
+
+noKeyButton.TextColor3 = Color3.fromRGB(100, 150, 255)
+
+noKeyButton.TextSize = 12
+
+noKeyButton.Font = Enum.Font.Gotham
+
+noKeyButton.TextXAlignment = Enum.TextXAlignment.Left
+
+noKeyButton.Parent = loaderFrame
+
+
+
+local underline = Instance.new("Frame")
+
+underline.Name = "Underline"
+
+underline.Position = UDim2.new(0, 0, 1, 0)
+
+underline.Size = UDim2.new(1, 0, 0, 1)
+
+underline.BackgroundColor3 = Color3.fromRGB(100, 150, 255)
+
+underline.BorderSizePixel = 0
+
+underline.Parent = noKeyButton
+
+
+
+local checkKeyButton = Instance.new("TextButton")
+
+checkKeyButton.Name = "CheckKeyButton"
+
+checkKeyButton.Position = UDim2.new(0.3, 0, 0.7, 30)
+
+checkKeyButton.Size = UDim2.new(0.4, 0, 0, 40)
+
+checkKeyButton.Text = "CHECK KEY"
+
+checkKeyButton.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
+
+checkKeyButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+checkKeyButton.TextSize = 14
+
+checkKeyButton.Font = Enum.Font.GothamBold
+
+checkKeyButton.Parent = loaderFrame
+
+
+
+-- Add corner radius to elements
+
+local corner = Instance.new("UICorner")
+
+corner.CornerRadius = UDim.new(0, 12)
+
+corner.Parent = loaderFrame
+
+
+
+local inputCorner = Instance.new("UICorner")
+
+inputCorner.CornerRadius = UDim.new(0, 6)
+
+inputCorner.Parent = keyInput
+
+
+
+local buttonCorner = Instance.new("UICorner")
+
+buttonCorner.CornerRadius = UDim.new(0, 6)
+
+buttonCorner.Parent = checkKeyButton
+
+
+
+-- Dragging functionality
+
+local dragging
+
+local dragInput
+
+local dragStart
+
+local startPos
+
+
+
+local function updateInput(input)
+
+    local delta = input.Position - dragStart
+
+    loaderFrame.Position = UDim2.new(
+
+        startPos.X.Scale, 
+
+        startPos.X.Offset + delta.X,
+
+        startPos.Y.Scale, 
+
+        startPos.Y.Offset + delta.Y
+
+    )
+
+end
+
+
+
+header.InputBegan:Connect(function(input)
+
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or 
+
+       input.UserInputType == Enum.UserInputType.Touch then
+
+        dragging = true
+
+        dragStart = input.Position
+
+        startPos = loaderFrame.Position
+
+        
+
+        local connection
+
+        connection = input.Changed:Connect(function()
+
+            if input.UserInputState == Enum.UserInputState.End then
+
+                dragging = false
+
+                connection:Disconnect()
+
+            end
+
+        end)
+
+    end
+
+end)
+
+
+
+header.InputChanged:Connect(function(input)
+
+    if (input.UserInputType == Enum.UserInputType.MouseMovement or 
+
+        input.UserInputType == Enum.UserInputType.Touch) and dragging then
+
+        updateInput(input)
+
+    end
+
+end)
+
+
+
+UserInputService.InputChanged:Connect(function(input)
+
+    if dragging and (input == dragInput or 
+
+       input.UserInputType == Enum.UserInputType.MouseMovement or 
+
+       input.UserInputType == Enum.UserInputType.Touch) then
+
+        updateInput(input)
+
+    end
+
+end)
+
+
+
+-- Close button functionality
+
+closeButton.MouseButton1Click:Connect(function()
+
+    loaderGui:Destroy()
+
+end)
+
+
+
+-- Load keys database with better error handling
+
+local keys
+
+local function loadKeys()
+
+    local success, result = pcall(function()
+
+        local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua", true)
+
+        if not response or response == "" then
+
+            error("Empty response from server")
+
+        end
+
+        local func = loadstring(response)
+
+        if not func then
+
+            error("Failed to compile keys data")
+
+        end
+
+        local data = func()
+
+        if not data then
+
+            error("No data returned from keys file")
+
+        end
+
+        return data
+
+    end)
+
+    
+
+    if not success then
+
+        showNotification("Failed to load keys database", true)
+
+        warn("Key loading error: "..tostring(result))
+
+        return nil
+
+    end
+
+    return result
+
+end
+
+
+
+-- Updated verifyKeyAndUser function for the new keys.lua structure
+
+local function verifyKeyAndUser(key, username)
+
+    if not keys then
+
+        warn("Keys database not loaded")
+
+        showNotification("System error: Keys not loaded", true)
+
+        return false, nil
+
+    end
+
+    
+
+    -- Check if key exists in database
+
+    if not keys.keys or not keys.keys[key] then 
+
+        warn("Key not found in database:", key)
+
+        showNotification("Invalid license key", true)
+
+        return false, nil 
+
+    end
+
+    
+
+    -- Get key type
+
+    local keyType = keys.keys[key].type
+
+    if not keyType then
+
+        warn("Key has no type specified:", key)
+
+        showNotification("Invalid key format", true)
+
+        return false, nil
+
+    end
+
+    
+
+    -- Get the key data from the combined file
+
+    local keyData = keys[keyType]
+
+    if not keyData then
+
+        warn("No data found for key type:", keyType)
+
+        showNotification("Invalid key type configuration", true)
+
+        return false, nil
+
+    end
+
+    
+
+    -- Search for matching key in data
+
+    local foundEntry
+
+    for _, entry in ipairs(keyData) do
+
+        if entry and entry.key and entry.key == key then
+
+            foundEntry = entry
+
+            break
+
+        end
+
+    end
+
+
+
+    if not foundEntry then
+
+        warn("No matching key entry found in data")
+
+        showNotification("Key verification failed", true)
+
+        return false, nil
+
+    end
+
+
+
+    -- Verify users list
+
+    if not foundEntry.users or type(foundEntry.users) ~= "table" then
+
+        warn("Key has no valid users list")
+
+        showNotification("Invalid key configuration", true)
+
+        return false, nil
+
+    end
+
+
+
+    -- Check if user is whitelisted
+
+    local lowerUsername = string.lower(username)
+
+    for _, user in ipairs(foundEntry.users) do
+
+        if string.lower(tostring(user)) == lowerUsername then
+
+            warn("User found in whitelist")
+
+            return true, keyType
+
+        end
+
+    end
+
+    
+
+    warn("User not in whitelist")
+
+    showNotification("Key not authorized for your account", true)
+
+    return false, nil
+
+end
+
+
+
+-- Load script version with error handling
+
+local function loadScriptVersion(keyType)
+
+    if not loaderGui or not loaderGui.Parent then return end
+
+    
+
+    loaderGui:Destroy()
+
+    
+
+    local scriptUrl
+
+    if keyType == "pro" or keyType == "eb" then
+
+        scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/pro/main.lua"
+
+    elseif keyType == "eu" then
+
+        scriptUrl = "https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua"
+
+    else
+
+        showNotification("Invalid license type", true)
+
+        game:GetService("Players").LocalPlayer:Kick("Invalid license type")
+
+        return
+
+    end
+
+    
+
+    warn("Loading script from:", scriptUrl)
+
+    local success, err = pcall(function()
+
+        local response = game:HttpGet(scriptUrl, true)
+
+        if not response or response == "" then
+
+            error("Empty response from server")
+
+        end
+
+        local func = loadstring(response)
+
+        if not func then
+
+            error("Failed to compile script")
+
+        end
+
+        func()
+
+    end)
+
+    
+
+    if not success then
+
+        showNotification("Failed to load script", true)
+
+        warn("Script loading error: "..tostring(err))
+
+        game:GetService("Players").LocalPlayer:Kick("Failed to load script")
+
+    end
+
+end
+
+
+
+-- Check key button with proper error handling
+
+checkKeyButton.MouseButton1Click:Connect(function()
+
+    showNotification("Verifying key...")
+
+    
+
+    -- Load keys if not already loaded
+
+    if not keys then
+
+        warn("Loading keys database...")
+
+        keys = loadKeys()
+
+        if not keys then 
+
+            return 
+
+        end
+
+        warn("Keys database loaded successfully")
+
+    end
+
+    
+
+    -- CORRECTION ICI : Utilisation de la fonction trim personnalisée
+
+    local key = trim(keyInput.Text)
+
+    if key == "" then
+
+        showNotification("Please enter a key", true)
+
+        return
+
+    end
+
+    
+
+    warn("Checking key:", key)
+
+    if not keys.keys[key] then
+
+        showNotification("Invalid key", true)
+
+        warn("Key not found in database")
+
+        return
+
+    end
+
+    
+
+    local username = player.Name
+
+    warn("Verifying user:", username)
+
+    
+
+    local isValid, keyType = verifyKeyAndUser(key, username)
+
+    
+
+    if not isValid or not keyType then
+
+        return
+
+    end
+
+    
+
+    warn("Key verification successful, type:", keyType)
+
+    showNotification("Key accepted! Loading...")
+
+    loadScriptVersion(keyType)
+
+end)
+
+
+
+-- Free version button
+
+noKeyButton.MouseButton1Click:Connect(function()
+
+    showNotification("Loading free version...")
+
+    loaderGui:Destroy()
+
+    local success, err = pcall(function()
+
+        local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/free/main.lua", true)
+
+        if not response or response == "" then
+
+            error("Empty response from server")
+
+        end
+
+        local func = loadstring(response)
+
+        if not func then
+
+            error("Failed to compile script")
+
+        end
+
+        func()
+
+    end)
+
+    if not success then
+
+        showNotification("Failed to load free version", true)
+
+        warn("Free version error: "..tostring(err))
+
+        game:GetService("Players").LocalPlayer:Kick("Failed to load free version")
+
+    end
+
+end)
