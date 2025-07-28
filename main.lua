@@ -200,9 +200,17 @@ pageScroller.ScrollBarThickness = 5
 pageScroller.AutomaticCanvasSize = Enum.AutomaticSize.Y
 pageScroller.Parent = pageContainer
 
--- Mobile responsiveness
+-- Mobile responsiveness (updated from pro version)
 if UserInputService.TouchEnabled then
-    mainFrame.Size = UDim2.new(0.9, 0, 0, 500)
+    mainFrame.Size = UDim2.new(0, 400, 0, 350)
+    -- Also adjust sidebar width for mobile
+    sidebar.Size = UDim2.new(0, 90, 1, -50)
+    pageContainer.Position = UDim2.new(0, 100, 0, 50)
+    pageContainer.Size = UDim2.new(1, -100, 1, -50)
+    -- Make text smaller on mobile
+    title.TextSize = 16
+    version.TextSize = 14
+    userIndicator.TextSize = 10
 end
 
 -- Dragging functionality
