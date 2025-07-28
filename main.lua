@@ -126,16 +126,91 @@ gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
--- Original notification function (bottom right, script themed)
+-- Notification management system
+local notificationQueue = {}
+local notificationContainer = nil
+
+-- Create notification container that's always on top
+local function createNotificationContainer()
+    if notificationContainer then return end
+    
+    notificationContainer = Instance.new("Frame")
+    notificationContainer.Name = "NotificationContainer"
+    notificationContainer.Size = UDim2.new(0, 320, 1, 0)
+    notificationContainer.Position = UDim2.new(1, -20, 0, 0)
+    notificationContainer.BackgroundTransparency = 1
+    notificationContainer.ZIndex = 10000 -- Always on top
+    notificationContainer.Parent = gui
+end
+
+-- Update positions of all notifications
+local function updateNotificationPositions()
+    if not notificationContainer then return end
+    
+    local yOffset = 20
+    for i, notif in ipairs(notificationQueue) do
+        if notif and notif.Parent then
+            local targetPos = UDim2.new(1, -320, 0, yOffset)
+            TweenService:Create(notif, TweenInfo.new(0.2), {Position = targetPos}):Play()
+            yOffset = yOffset + 70
+        end
+    end
+end
+
+-- Remove notification from queue and update positions
+local function removeNotification(notif)
+    for i, queuedNotif in ipairs(notificationQueue) do
+        if queuedNotif == notif then
+            table.remove(notificationQueue, i)
+            break
+        end
+    end
+    
+    -- Animate out
+    TweenService:Create(notif, TweenInfo.new(0.3), {
+        Position = UDim2.new(1, 50, notif.Position.Y.Scale, notif.Position.Y.Offset),
+        BackgroundTransparency = 1
+    }):Play()
+    
+    -- Update remaining notifications
+    updateNotificationPositions()
+    
+    -- Destroy after animation
+    task.wait(0.3)
+    if notif and notif.Parent then
+        notif:Destroy()
+    end
+    
+    -- Start timer for next notification if it exists
+    if #notificationQueue > 0 and notificationQueue[1] then
+        startNotificationTimer(notificationQueue[1])
+    end
+end
+
+-- Start disappear timer for notification
+local function startNotificationTimer(notif)
+    if not notif or not notif.Parent then return end
+    
+    task.spawn(function()
+        task.wait(3) -- 3 second display time
+        if notif and notif.Parent then
+            removeNotification(notif)
+        end
+    end)
+end
+
+-- Enhanced notification function with queue management
 local function showNotification(text, isError)
+    createNotificationContainer()
+    
     local notif = Instance.new("Frame")
     notif.Name = "Notification"
-    notif.AnchorPoint = Vector2.new(1, 1)
-    notif.Position = UDim2.new(1, -20, 1, -20)
+    notif.AnchorPoint = Vector2.new(1, 0)
     notif.Size = UDim2.new(0, 300, 0, 60)
     notif.BackgroundColor3 = isError and Color3.fromRGB(80, 40, 40) or Color3.fromRGB(40, 40, 50)
     notif.BackgroundTransparency = 0.2
-    notif.Parent = gui
+    notif.ZIndex = 10001 -- Higher than container
+    notif.Parent = notificationContainer
 
     local corner = Instance.new("UICorner")
     corner.CornerRadius = UDim.new(0, 8)
@@ -151,16 +226,22 @@ local function showNotification(text, isError)
     label.TextSize = 14
     label.Font = Enum.Font.Gotham
     label.TextXAlignment = Enum.TextXAlignment.Left
+    label.ZIndex = 10002
     label.Parent = notif
 
-    -- Animation
-    notif.Position = UDim2.new(1, -20, 1, 100)
-    TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(1, -20, 1, -20)}):Play()
+    -- Add to queue
+    table.insert(notificationQueue, notif)
     
-    delay(3, function()
-        TweenService:Create(notif, TweenInfo.new(0.3), {Position = UDim2.new(1, -20, 1, 100)}):Play()
-        delay(0.3, function() notif:Destroy() end)
-    end)
+    -- Start slide-in animation from right
+    notif.Position = UDim2.new(1, 50, 0, 20)
+    
+    -- Update all positions
+    updateNotificationPositions()
+    
+    -- If this is the first (oldest) notification, start its timer
+    if notificationQueue[1] == notif then
+        startNotificationTimer(notif)
+    end
 end
 
 -- Show welcome notification with key type
