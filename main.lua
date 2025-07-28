@@ -1,7 +1,123 @@
 local Players = game:GetService("Players")
 local UserInputService = game:GetService("UserInputService")
 local TweenService = game:GetService("TweenService")
+local HttpService = game:GetService("HttpService")
 local player = Players.LocalPlayer
+
+-- KEY VALIDATION SYSTEM
+local function validateKey()
+    -- Get keys data from main branch
+    local success, keysData = pcall(function()
+        local response = game:HttpGet("https://raw.githubusercontent.com/tap-shift/tapx/main/keys.lua")
+        -- Remove the "return " at the beginning and execute the table
+        local cleanResponse = response:gsub("^return%s*", "")
+        return loadstring("return " .. cleanResponse)()
+    end)
+    
+    if not success then
+        return false, "Failed to load key database"
+    end
+    
+    -- Check if user has a valid pro key
+    local playerName = player.Name
+    
+    -- Check pro keys
+    for _, keyData in ipairs(keysData.pro) do
+        for _, authorizedUser in ipairs(keyData.users) do
+            if authorizedUser == playerName then
+                return true, "Pro access granted", "pro"
+            end
+        end
+    end
+    
+    -- Check early buyer keys
+    for _, keyData in ipairs(keysData.eb) do
+        for _, authorizedUser in ipairs(keyData.users) do
+            if authorizedUser == playerName then
+                return true, "Early Buyer access granted", "eb"
+            end
+        end
+    end
+    
+    -- Check early user keys
+    for _, keyData in ipairs(keysData.eu) do
+        for _, authorizedUser in ipairs(keyData.users) do
+            if authorizedUser == playerName then
+                return true, "Early User access granted", "eu"
+            end
+        end
+    end
+    
+    return false, "Access denied: No valid key found for user " .. playerName
+end
+
+-- Validate key before proceeding
+local isValid, message, keyType = validateKey()
+
+if not isValid then
+    -- Create unauthorized access GUI
+    local unauthorizedGui = Instance.new("ScreenGui")
+    unauthorizedGui.Name = "TapXUnauthorized"
+    unauthorizedGui.ResetOnSpawn = false
+    unauthorizedGui.Parent = player:WaitForChild("PlayerGui")
+    
+    local frame = Instance.new("Frame")
+    frame.AnchorPoint = Vector2.new(0.5, 0.5)
+    frame.Position = UDim2.new(0.5, 0, 0.5, 0)
+    frame.Size = UDim2.new(0, 400, 0, 200)
+    frame.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+    frame.Parent = unauthorizedGui
+    
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 12)
+    corner.Parent = frame
+    
+    local title = Instance.new("TextLabel")
+    title.Size = UDim2.new(1, 0, 0, 50)
+    title.BackgroundTransparency = 1
+    title.Text = "ACCESS DENIED"
+    title.TextColor3 = Color3.fromRGB(255, 100, 100)
+    title.TextSize = 24
+    title.Font = Enum.Font.GothamBold
+    title.Parent = frame
+    
+    local messageLabel = Instance.new("TextLabel")
+    messageLabel.Position = UDim2.new(0, 20, 0, 60)
+    messageLabel.Size = UDim2.new(1, -40, 0, 80)
+    messageLabel.BackgroundTransparency = 1
+    messageLabel.Text = message
+    messageLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+    messageLabel.TextSize = 16
+    messageLabel.Font = Enum.Font.Gotham
+    messageLabel.TextWrapped = true
+    messageLabel.Parent = frame
+    
+    local closeBtn = Instance.new("TextButton")
+    closeBtn.Position = UDim2.new(0.5, -50, 1, -50)
+    closeBtn.Size = UDim2.new(0, 100, 0, 30)
+    closeBtn.BackgroundColor3 = Color3.fromRGB(80, 80, 90)
+    closeBtn.Text = "CLOSE"
+    closeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    closeBtn.Font = Enum.Font.GothamBold
+    closeBtn.Parent = frame
+    
+    local btnCorner = Instance.new("UICorner")
+    btnCorner.Parent = closeBtn
+    
+    closeBtn.MouseButton1Click:Connect(function()
+        unauthorizedGui:Destroy()
+    end)
+    
+    -- Auto-close after 10 seconds
+    task.wait(10)
+    if unauthorizedGui and unauthorizedGui.Parent then
+        unauthorizedGui:Destroy()
+    end
+    
+    return -- Stop script execution
+end
+
+-- If we reach here, user is authorized - continue with original script
 
 -- Create main GUI
 local gui = Instance.new("ScreenGui")
@@ -46,6 +162,9 @@ local function showNotification(text, isError)
         delay(0.3, function() notif:Destroy() end)
     end)
 end
+
+-- Show welcome notification with key type
+showNotification("Welcome! " .. message .. " (" .. (keyType or "unknown") .. ")", false)
 
 -- Main frame
 local mainFrame = Instance.new("Frame")
@@ -129,6 +248,23 @@ version.Font = Enum.Font.Gotham
 version.TextXAlignment = Enum.TextXAlignment.Left
 version.Parent = titleContainer
 
+-- User indicator
+local userIndicator = Instance.new("TextLabel")
+userIndicator.Name = "UserIndicator"
+userIndicator.AnchorPoint = Vector2.new(1, 0.5)
+userIndicator.Position = UDim2.new(1, -50, 0.5, 0)
+userIndicator.Size = UDim2.new(0, 0, 0, 20)
+userIndicator.AutomaticSize = Enum.AutomaticSize.X
+userIndicator.BackgroundTransparency = 1
+userIndicator.Text = "👤 " .. player.Name .. " (" .. keyType:upper() .. ")"
+userIndicator.TextColor3 = keyType == "pro" and Color3.fromRGB(255, 215, 0) or 
+                           keyType == "eb" and Color3.fromRGB(100, 255, 100) or 
+                           Color3.fromRGB(100, 200, 255)
+userIndicator.TextSize = 12
+userIndicator.Font = Enum.Font.Gotham
+userIndicator.TextXAlignment = Enum.TextXAlignment.Right
+userIndicator.Parent = header
+
 -- Close button
 local closeButton = Instance.new("ImageButton")
 closeButton.Name = "CloseButton"
@@ -195,6 +331,7 @@ if UserInputService.TouchEnabled then
     -- Make text smaller on mobile
     title.TextSize = 16
     version.TextSize = 14
+    userIndicator.TextSize = 10
 end
 
 -- Dragging functionality
