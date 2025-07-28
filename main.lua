@@ -129,6 +129,21 @@ version.Font = Enum.Font.Gotham
 version.TextXAlignment = Enum.TextXAlignment.Left
 version.Parent = titleContainer
 
+-- User indicator
+local userIndicator = Instance.new("TextLabel")
+userIndicator.Name = "UserIndicator"
+userIndicator.AnchorPoint = Vector2.new(1, 0.5)
+userIndicator.Position = UDim2.new(1, -50, 0.5, 0)
+userIndicator.Size = UDim2.new(0, 0, 0, 20)
+userIndicator.AutomaticSize = Enum.AutomaticSize.X
+userIndicator.BackgroundTransparency = 1
+userIndicator.Text = "👤 " .. player.Name .. " (Free)"
+userIndicator.TextColor3 = Color3.fromRGB(100, 200, 255) -- Light blue color for free version
+userIndicator.TextSize = 12
+userIndicator.Font = Enum.Font.Gotham
+userIndicator.TextXAlignment = Enum.TextXAlignment.Right
+userIndicator.Parent = header
+
 -- Close button
 local closeButton = Instance.new("ImageButton")
 closeButton.Name = "CloseButton"
