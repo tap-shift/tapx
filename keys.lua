@@ -1,7 +1,7 @@
 return {
     keys = {
         -- EB KEYS
-        ["TAPX-EB-1111"] = {type = "eb"},
+        ["JordansKey"] = {type = "eb"}
         ["TAPX-EB-2222"] = {type = "eb"},
         ["TAPX-EB-3333"] = {type = "eb"},
         -- EU KEYS
@@ -9,7 +9,7 @@ return {
         ["TAPX-EU-5555"] = {type = "eu"},
         ["TAPX-EU-6666"] = {type = "eu"},
         -- PRO KEYS
-        ["TAPX-PRO-7777"] = {type = "pro"},
+        ["Numbers"] = {type = "pro"},
         ["TAPX-PRO-8888"] = {type = "pro"},
         ["TAPX-PRO-9999"] = {type = "pro"}
     },
@@ -17,8 +17,8 @@ return {
     -- Pro keys data
     pro = {
         {
-            key = "TAPX-PRO-7777",  -- GIVEN TO FRITE FOR TESTING
-            users = {"urskid11"}
+            key = "Numbers",  -- WON A GIVEAWAY
+            users = {"5STAR_KYLAN"}
         },
         {
             key = "TAPX-PRO-8888",  -- DEV TEST KEY 1
