@@ -157,7 +157,7 @@ local function updateNotificationPositions()
     end
 end
 
--- Remove notification from queue
+-- Remove notification from queue and update positions
 local function removeNotification(notif)
     for i, queuedNotif in ipairs(notificationQueue) do
         if queuedNotif == notif then
@@ -181,10 +181,27 @@ local function removeNotification(notif)
         if notif and notif.Parent then
             notif:Destroy()
         end
+        
+        -- Start timer for next notification if it exists
+        if #notificationQueue > 0 and notificationQueue[1] then
+            startNotificationTimer(notificationQueue[1])
+        end
     end)
 end
 
--- Enhanced notification function with independent timers
+-- Start disappear timer for notification
+local function startNotificationTimer(notif)
+    if not notif or not notif.Parent then return end
+    
+    task.spawn(function()
+        task.wait(3) -- 3 second display time
+        if notif and notif.Parent then
+            removeNotification(notif)
+        end
+    end)
+end
+
+-- Enhanced notification function with queue management
 local function showNotification(text, isError)
     createNotificationContainer()
     
@@ -223,12 +240,10 @@ local function showNotification(text, isError)
     -- Update all positions
     updateNotificationPositions()
     
-    -- Start independent timer for this notification
-    task.delay(3, function()
-        if notif and notif.Parent then
-            removeNotification(notif)
-        end
-    end)
+    -- If this is the first (oldest) notification, start its timer
+    if notificationQueue[1] == notif then
+        startNotificationTimer(notif)
+    end
 end
 
 -- SECURE CACHING SYSTEM
