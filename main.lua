@@ -11,10 +11,10 @@ gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
 -- Notification management system
-local notificationQueue = {}
 local notificationContainer = nil
+local activeNotifications = {}
 
--- Create notification container that's always on top
+-- Create notification container
 local function createNotificationContainer()
     if notificationContainer then return end
     
@@ -23,16 +23,16 @@ local function createNotificationContainer()
     notificationContainer.Size = UDim2.new(0, 320, 1, 0)
     notificationContainer.Position = UDim2.new(1, -20, 0, 0)
     notificationContainer.BackgroundTransparency = 1
-    notificationContainer.ZIndex = 10000 -- Always on top
+    notificationContainer.ZIndex = 10000
     notificationContainer.Parent = gui
 end
 
--- Update positions of all notifications
+-- Update notification positions
 local function updateNotificationPositions()
     if not notificationContainer then return end
     
     local yOffset = 20
-    for i, notif in ipairs(notificationQueue) do
+    for i, notif in ipairs(activeNotifications) do
         if notif and notif.Parent then
             local targetPos = UDim2.new(1, -320, 0, yOffset)
             TweenService:Create(notif, TweenInfo.new(0.2), {Position = targetPos}):Play()
@@ -41,51 +41,30 @@ local function updateNotificationPositions()
     end
 end
 
--- Remove notification from queue and update positions
+-- Remove notification
 local function removeNotification(notif)
-    for i, queuedNotif in ipairs(notificationQueue) do
-        if queuedNotif == notif then
-            table.remove(notificationQueue, i)
+    for i, activeNotif in ipairs(activeNotifications) do
+        if activeNotif == notif then
+            table.remove(activeNotifications, i)
             break
         end
     end
     
-    -- Animate out
     TweenService:Create(notif, TweenInfo.new(0.3), {
         Position = UDim2.new(1, 50, notif.Position.Y.Scale, notif.Position.Y.Offset),
         BackgroundTransparency = 1
     }):Play()
     
-    -- Update remaining notifications
     updateNotificationPositions()
     
-    -- Destroy after animation
-    task.spawn(function()
-        task.wait(0.3)
+    task.delay(0.3, function()
         if notif and notif.Parent then
             notif:Destroy()
         end
-        
-        -- Start timer for next notification if it exists
-        if #notificationQueue > 0 and notificationQueue[1] then
-            startNotificationTimer(notificationQueue[1])
-        end
     end)
 end
 
--- Start disappear timer for notification
-local function startNotificationTimer(notif)
-    if not notif or not notif.Parent then return end
-    
-    task.spawn(function()
-        task.wait(3) -- 3 second display time
-        if notif and notif.Parent then
-            removeNotification(notif)
-        end
-    end)
-end
-
--- Enhanced notification function with queue management
+-- Show notification
 local function showNotification(text, isError)
     createNotificationContainer()
     
@@ -95,7 +74,7 @@ local function showNotification(text, isError)
     notif.Size = UDim2.new(0, 300, 0, 60)
     notif.BackgroundColor3 = isError and Color3.fromRGB(80, 40, 40) or Color3.fromRGB(40, 40, 50)
     notif.BackgroundTransparency = 0.2
-    notif.ZIndex = 10001 -- Higher than container
+    notif.ZIndex = 10001
     notif.Parent = notificationContainer
 
     local corner = Instance.new("UICorner")
@@ -115,33 +94,27 @@ local function showNotification(text, isError)
     label.ZIndex = 10002
     label.Parent = notif
 
-    -- Add to queue
-    table.insert(notificationQueue, notif)
-    
-    -- Start slide-in animation from right
+    table.insert(activeNotifications, notif)
     notif.Position = UDim2.new(1, 50, 0, 20)
-    
-    -- Update all positions
     updateNotificationPositions()
     
-    -- If this is the first (oldest) notification, start its timer
-    if notificationQueue[1] == notif then
-        startNotificationTimer(notif)
-    end
+    task.delay(3, function()
+        if notif and notif.Parent then
+            removeNotification(notif)
+        end
+    end)
 end
 
--- CACHING SYSTEM FOR FREE VERSION
+-- Caching system
 local pageCache = {}
 local libraryCache = nil
 local cacheTimestamp = tick()
-local CACHE_TIMEOUT = 600 -- 10 minutes cache timeout for free version
+local CACHE_TIMEOUT = 600
 
--- Cache validation
 local function isCacheValid()
     return (tick() - cacheTimestamp) < CACHE_TIMEOUT
 end
 
--- Clear cache after timeout
 local function clearCacheIfExpired()
     if not isCacheValid() then
         pageCache = {}
@@ -151,12 +124,11 @@ local function clearCacheIfExpired()
     end
 end
 
--- Load and cache library
+-- Load library
 local function loadLib()
     clearCacheIfExpired()
     
     if libraryCache and isCacheValid() then
-        showNotification("Library loaded from cache", false)
         return libraryCache
     end
     
@@ -177,12 +149,11 @@ local function loadLib()
     return result
 end
 
--- Page loading with caching
+-- Load page with caching
 local function loadPageCached(pageName, url)
     clearCacheIfExpired()
     
     if pageCache[pageName] and isCacheValid() then
-        showNotification(pageName .. " loaded from cache", false)
         return pageCache[pageName]
     end
     
@@ -202,14 +173,13 @@ local function loadPageCached(pageName, url)
         return nil
     end
     
-    -- Cache the loaded function
     pageCache[pageName] = result
     cacheTimestamp = tick()
     showNotification(pageName .. " loaded and cached", false)
     return result
 end
 
--- Individual page load functions with caching
+-- Page load functions
 local function loadBypasserPage(frame, bypasser)
     local pageFunction = loadPageCached("Bypasser", "https://raw.githubusercontent.com/tap-shift/tapx/free/bypasser.lua")
     if not pageFunction then return nil end
@@ -258,10 +228,10 @@ local function loadSettingsPage(frame, bypasser)
     return result
 end
 
--- Show welcome notification
+-- Show welcome
 showNotification("Welcome to TapX Free Edition!", false)
 
--- Main frame
+-- Main UI setup
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "MainFrame"
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
@@ -273,7 +243,7 @@ mainFrame.BorderSizePixel = 0
 mainFrame.ClipsDescendants = true
 mainFrame.Parent = gui
 
--- Glass morphism effect
+-- Background effect
 local backgroundBlur = Instance.new("Frame")
 backgroundBlur.Name = "BackgroundBlur"
 backgroundBlur.Size = UDim2.new(1, 0, 1, 0)
@@ -286,19 +256,18 @@ local blurCorner = Instance.new("UICorner")
 blurCorner.CornerRadius = UDim.new(0, 12)
 blurCorner.Parent = backgroundBlur
 
--- Main content frame
+-- Content frame
 local contentFrame = Instance.new("Frame")
 contentFrame.Name = "ContentFrame"
 contentFrame.Size = UDim2.new(1, 0, 1, 0)
 contentFrame.BackgroundTransparency = 1
 contentFrame.Parent = mainFrame
 
--- Rounded corners
 local corner = Instance.new("UICorner")
 corner.CornerRadius = UDim.new(0, 12)
 corner.Parent = mainFrame
 
--- Header section
+-- Header
 local header = Instance.new("Frame")
 header.Name = "Header"
 header.Size = UDim2.new(1, 0, 0, 50)
@@ -310,7 +279,7 @@ local headerCorner = Instance.new("UICorner")
 headerCorner.CornerRadius = UDim.new(0, 12)
 headerCorner.Parent = header
 
--- Title with version
+-- Title
 local titleContainer = Instance.new("Frame")
 titleContainer.Name = "TitleContainer"
 titleContainer.Position = UDim2.new(0, 20, 0, 0)
@@ -343,7 +312,7 @@ version.Font = Enum.Font.Gotham
 version.TextXAlignment = Enum.TextXAlignment.Left
 version.Parent = titleContainer
 
--- User indicator with cache status
+-- User indicator
 local userIndicator = Instance.new("TextLabel")
 userIndicator.Name = "UserIndicator"
 userIndicator.AnchorPoint = Vector2.new(1, 0.5)
@@ -352,7 +321,7 @@ userIndicator.Size = UDim2.new(0, 0, 0, 20)
 userIndicator.AutomaticSize = Enum.AutomaticSize.X
 userIndicator.BackgroundTransparency = 1
 userIndicator.Text = "👤 " .. player.Name .. " (FREE) 🔄"
-userIndicator.TextColor3 = Color3.fromRGB(100, 200, 255) -- Light blue color for free version
+userIndicator.TextColor3 = Color3.fromRGB(100, 200, 255)
 userIndicator.TextSize = 12
 userIndicator.Font = Enum.Font.Gotham
 userIndicator.TextXAlignment = Enum.TextXAlignment.Right
@@ -371,7 +340,7 @@ closeButton.ImageRectSize = Vector2.new(24, 24)
 closeButton.ImageColor3 = Color3.fromRGB(200, 200, 200)
 closeButton.Parent = header
 
--- Sidebar for pages
+-- Sidebar
 local sidebar = Instance.new("Frame")
 sidebar.Name = "Sidebar"
 sidebar.Position = UDim2.new(0, 0, 0, 50)
@@ -385,7 +354,7 @@ local sidebarCorner = Instance.new("UICorner")
 sidebarCorner.CornerRadius = UDim.new(0, 12)
 sidebarCorner.Parent = sidebar
 
--- Page buttons container
+-- Page buttons
 local pageButtons = Instance.new("Frame")
 pageButtons.Name = "PageButtons"
 pageButtons.Position = UDim2.new(0, 10, 0, 10)
@@ -405,7 +374,7 @@ pageContainer.Size = UDim2.new(1, -130, 1, -50)
 pageContainer.BackgroundTransparency = 1
 pageContainer.Parent = contentFrame
 
--- Create page scrolling frame
+-- Page scroller
 local pageScroller = Instance.new("ScrollingFrame")
 pageScroller.Name = "PageScroller"
 pageScroller.Size = UDim2.new(1, 0, 1, 0)
@@ -473,7 +442,7 @@ UserInputService.InputChanged:Connect(function(input)
     end
 end)
 
--- Close button functionality
+-- Close button
 closeButton.MouseButton1Click:Connect(function()
     gui:Destroy()
 end)
@@ -482,17 +451,13 @@ end)
 local currentPage = nil
 local Bypasser = nil
 
--- Helper function to clear all pages
 local function clearAllPages()
-    -- Clear ALL content from page scroller
     for _, child in ipairs(pageScroller:GetChildren()) do
         if child:IsA("GuiObject") then
             child:Destroy()
         end
     end
     currentPage = nil
-    
-    -- Reset scroll position
     pageScroller.CanvasPosition = Vector2.new(0, 0)
 end
 
@@ -513,19 +478,14 @@ local function createPageButton(pageName)
     corner.Parent = button
     
     button.MouseButton1Click:Connect(function()
-        -- Load library if not loaded yet
         if not Bypasser then
             Bypasser = loadLib()
             if not Bypasser then return end
         end
         
-        -- Clear ALL pages to prevent overlapping
         clearAllPages()
-        
-        -- Wait a frame to ensure cleanup is complete
         task.wait()
         
-        -- Create new page container
         local pageContent = Instance.new("Frame")
         pageContent.Name = pageName .. "_Content"
         pageContent.Size = UDim2.new(1, 0, 0, 0)
@@ -533,7 +493,6 @@ local function createPageButton(pageName)
         pageContent.BackgroundTransparency = 1
         pageContent.Parent = pageScroller
         
-        -- Load specific page based on name
         local success, err = pcall(function()
             if pageName == "Bypasser" then
                 loadBypasserPage(pageContent, Bypasser)
@@ -553,7 +512,6 @@ local function createPageButton(pageName)
         
         currentPage = pageContent
         
-        -- Update button colors
         for _, btn in ipairs(pageButtons:GetChildren()) do
             if btn:IsA("TextButton") then
                 btn.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
@@ -563,8 +521,6 @@ local function createPageButton(pageName)
         
         button.BackgroundColor3 = Color3.fromRGB(80, 120, 200)
         button.TextColor3 = Color3.fromRGB(255, 255, 255)
-        
-        -- Update cache indicator
         userIndicator.Text = "👤 " .. player.Name .. " (FREE) ⚡"
     end)
     
@@ -576,16 +532,14 @@ createPageButton("Bypasser")
 createPageButton("History")
 createPageButton("Settings")
 
--- Pre-load all pages in background for faster access
+-- Pre-load pages
 task.spawn(function()
-    wait(1) -- Wait for UI to load
+    wait(1)
     showNotification("Pre-loading pages...", false)
     
-    -- Pre-load library
     Bypasser = loadLib()
     if not Bypasser then return end
     
-    -- Pre-load all page functions
     loadPageCached("Bypasser", "https://raw.githubusercontent.com/tap-shift/tapx/free/bypasser.lua")
     loadPageCached("History", "https://raw.githubusercontent.com/tap-shift/tapx/free/history.lua")
     loadPageCached("Settings", "https://raw.githubusercontent.com/tap-shift/tapx/free/settings.lua")
@@ -596,6 +550,6 @@ end)
 
 -- Load default page
 task.spawn(function()
-    wait(0.1) -- Small delay to ensure everything is loaded
+    wait(0.1)
     pageButtons:FindFirstChild("Bypasser"):MouseButton1Click()
 end)
