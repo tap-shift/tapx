@@ -301,11 +301,11 @@ title.Parent = titleContainer
 
 local version = Instance.new("TextLabel")
 version.Name = "Version"
-version.Position = UDim2.new(0, title.TextBounds.X + 40, 0, 0)
+version.Position = UDim2.new(0, title.TextBounds.X + 10, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
-version.Text = "v1.8"
+version.Text = "v1.9"
 version.TextColor3 = Color3.fromRGB(180, 180, 180)
 version.TextSize = 16
 version.Font = Enum.Font.Gotham
