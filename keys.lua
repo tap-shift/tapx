@@ -1,7 +1,7 @@
 return {
     keys = {
         -- EB KEYS
-        ["JordansKey"] = {type = "eb"}
+        ["JordansKey"] = {type = "eb"},
         ["TAPX-EB-2222"] = {type = "eb"},
         ["TAPX-EB-3333"] = {type = "eb"},
         -- EU KEYS
