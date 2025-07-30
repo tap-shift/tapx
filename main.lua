@@ -432,7 +432,7 @@ title.Parent = titleContainer
 
 local version = Instance.new("TextLabel")
 version.Name = "Version"
-version.Position = UDim2.new(0, title.TextBounds.X + 1, 0, 0)
+version.Position = UDim2.new(0, title.TextBounds.X + 0.2, 0, 0)
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
