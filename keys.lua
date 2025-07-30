@@ -21,11 +21,11 @@ return {
             users = {"5STAR_KYLAN"}
         },
         {
-            key = "TAPX-PRO-8888",  -- DEV TEST KEY 1
+            key = "dev1",  -- DEV TEST KEY 1
             users = {"rivalenMeisterPro"}
         },
         {
-            key = "TAPX-PRO-9999",  -- DEV TEST KEY 2
+            key = "dev2",  -- DEV TEST KEY 2
             users = {"Steven1234wth2"}
         }
     },
