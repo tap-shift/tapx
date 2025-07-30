@@ -127,8 +127,8 @@ gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 gui.Parent = player:WaitForChild("PlayerGui")
 
 -- Notification management system
-local notificationQueue = {}
 local notificationContainer = nil
+local activeNotifications = {} -- Track active notifications for positioning
 
 -- Create notification container that's always on top
 local function createNotificationContainer()
@@ -148,7 +148,7 @@ local function updateNotificationPositions()
     if not notificationContainer then return end
     
     local yOffset = 20
-    for i, notif in ipairs(notificationQueue) do
+    for i, notif in ipairs(activeNotifications) do
         if notif and notif.Parent then
             local targetPos = UDim2.new(1, -320, 0, yOffset)
             TweenService:Create(notif, TweenInfo.new(0.2), {Position = targetPos}):Play()
@@ -157,11 +157,12 @@ local function updateNotificationPositions()
     end
 end
 
--- Remove notification from queue and update positions
+-- Remove notification and update positions
 local function removeNotification(notif)
-    for i, queuedNotif in ipairs(notificationQueue) do
-        if queuedNotif == notif then
-            table.remove(notificationQueue, i)
+    -- Find and remove the notification
+    for i, activeNotif in ipairs(activeNotifications) do
+        if activeNotif == notif then
+            table.remove(activeNotifications, i)
             break
         end
     end
@@ -176,32 +177,14 @@ local function removeNotification(notif)
     updateNotificationPositions()
     
     -- Destroy after animation
-    task.spawn(function()
-        task.wait(0.3)
+    task.delay(0.3, function()
         if notif and notif.Parent then
             notif:Destroy()
         end
-        
-        -- Start timer for next notification if it exists
-        if #notificationQueue > 0 and notificationQueue[1] then
-            startNotificationTimer(notificationQueue[1])
-        end
     end)
 end
 
--- Start disappear timer for notification
-local function startNotificationTimer(notif)
-    if not notif or not notif.Parent then return end
-    
-    task.spawn(function()
-        task.wait(3) -- 3 second display time
-        if notif and notif.Parent then
-            removeNotification(notif)
-        end
-    end)
-end
-
--- Enhanced notification function with queue management
+-- Enhanced notification function
 local function showNotification(text, isError)
     createNotificationContainer()
     
@@ -231,8 +214,8 @@ local function showNotification(text, isError)
     label.ZIndex = 10002
     label.Parent = notif
 
-    -- Add to queue
-    table.insert(notificationQueue, notif)
+    -- Add to active notifications
+    table.insert(activeNotifications, notif)
     
     -- Start slide-in animation from right
     notif.Position = UDim2.new(1, 50, 0, 20)
@@ -240,10 +223,12 @@ local function showNotification(text, isError)
     -- Update all positions
     updateNotificationPositions()
     
-    -- If this is the first (oldest) notification, start its timer
-    if notificationQueue[1] == notif then
-        startNotificationTimer(notif)
-    end
+    -- Automatically remove after 3 seconds
+    task.delay(3, function()
+        if notif and notif.Parent then
+            removeNotification(notif)
+        end
+    end)
 end
 
 -- SECURE CACHING SYSTEM
