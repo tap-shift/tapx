@@ -482,6 +482,20 @@ end)
 local currentPage = nil
 local Bypasser = nil
 
+-- Helper function to clear all pages
+local function clearAllPages()
+    -- Clear ALL content from page scroller
+    for _, child in ipairs(pageScroller:GetChildren()) do
+        if child:IsA("GuiObject") then
+            child:Destroy()
+        end
+    end
+    currentPage = nil
+    
+    -- Reset scroll position
+    pageScroller.CanvasPosition = Vector2.new(0, 0)
+end
+
 local function createPageButton(pageName)
     local button = Instance.new("TextButton")
     button.Name = pageName
@@ -505,15 +519,15 @@ local function createPageButton(pageName)
             if not Bypasser then return end
         end
         
-        -- Clear current page
-        if currentPage then
-            currentPage:Destroy()
-            currentPage = nil
-        end
+        -- Clear ALL pages to prevent overlapping
+        clearAllPages()
+        
+        -- Wait a frame to ensure cleanup is complete
+        task.wait()
         
         -- Create new page container
         local pageContent = Instance.new("Frame")
-        pageContent.Name = pageName
+        pageContent.Name = pageName .. "_Content"
         pageContent.Size = UDim2.new(1, 0, 0, 0)
         pageContent.AutomaticSize = Enum.AutomaticSize.Y
         pageContent.BackgroundTransparency = 1
