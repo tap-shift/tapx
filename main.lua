@@ -257,8 +257,7 @@ local function loadLib()
     clearCacheIfExpired()
     
     if libraryCache and isCacheValid() then
-        showNotification("Library loaded from cache", false)
-        return libraryCache
+        return libraryCache -- Removed cache loaded notification
     end
     
     showNotification("Loading library...", false)
@@ -283,8 +282,7 @@ local function loadPageSecure(pageName, url)
     clearCacheIfExpired()
     
     if pageCache[pageName] and isCacheValid() then
-        showNotification(pageName .. " loaded from cache", false)
-        return pageCache[pageName]
+        return pageCache[pageName] -- Removed cache loaded notification
     end
     
     showNotification("Loading " .. pageName .. " page...", false)
