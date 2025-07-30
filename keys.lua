@@ -17,7 +17,7 @@ return {
     -- Pro keys data
     pro = {
         {
-            key = "Numbers",  -- WON A GIVEAWAY
+            key = "Numbers",  -- WON A GIVEAWAY @Ixv_x
             users = {"5STAR_KYLAN"}
         },
         {
