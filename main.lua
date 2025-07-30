@@ -301,7 +301,7 @@ title.Parent = titleContainer
 
 local version = Instance.new("TextLabel")
 version.Name = "Version"
-version.Position = UDim2.new(0, title.TextBounds.X + 5, 0, 0)  -- Changed to use text bounds with 5 pixel gap
+version.Position = UDim2.new(0, title.TextBounds.X + 2, 0, 0)  -- Only 2 pixel gap now
 version.Size = UDim2.new(0, 0, 1, 0)
 version.AutomaticSize = Enum.AutomaticSize.X
 version.BackgroundTransparency = 1
