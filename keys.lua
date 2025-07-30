@@ -50,7 +50,7 @@ return {
     eu = {
         {
             key = "TAPX-EU-4444",
-            users = {"rivalenMeisterPro", "User2", "User3"}
+            users = {"User1", "User2", "User3"}
         },
         {
             key = "TAPX-EU-5555",
