@@ -10,8 +10,8 @@ return {
         ["TAPX-EU-6666"] = {type = "eu"},
         -- PRO KEYS
         ["Numbers"] = {type = "pro"},           -- @Ixv_x
-        ["TAPX-PRO-8888"] = {type = "pro"},
-        ["TAPX-PRO-9999"] = {type = "pro"}
+        ["dev1"] = {type = "pro"},
+        ["dev2"] = {type = "pro"}
     },
     
     -- Pro keys data
@@ -50,7 +50,7 @@ return {
     eu = {
         {
             key = "TAPX-EU-4444",
-            users = {"User1", "User2", "User3"}
+            users = {"rivalenMeisterPro", "User2", "User3"}
         },
         {
             key = "TAPX-EU-5555",
