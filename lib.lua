@@ -1,63 +1,68 @@
 --!strict
 local Bypasser = {}
 
--- Homoglyphen-Tabelle
-local charSubstitutions = {
-	a = { "ą", "ḁ", "aธ", "aั", "ᴀ", "ส", "ạ", "à" },
-	b = { "ƀ", "ḅ", "bม", "ɓ", "฿" },
-	c = { "cׂׂׂ", "ç", "cׂꞣ", "cׂ", "ͼ", "¢" },
-	d = { "đ", "dִִִ", "ď", "ḓ", "ḍ", "ɗ" },
-	e = { "ė", "ề", "eִִִ", "ɛ", "є", "ẹ" },
-	f = { "fม", "ƒ", "ғ", "fͼ", "f͟" },
-	g = { "ǥ", "gִ", "ɠ", "ģ" },
-	h = { "ĥ", "ћ", "hִִִ", "ḥ", "ђ", "Ħ" },
-	i = { "į", "iͼ", "ί", "ỉ" },
-	j = { "jִ", "ʝ" },
-	k = { "ᴋ", "ķ", "ḳ", "kׂ", "ꞣ" },
-	l = { "lề", "ḽ", "lִִִ", "ł", "ḽ", "lส" },
-	m = { "mִִִ", "ṃ", "mม", "ɱ" },
-	n = { "ň", "ภ", "и" },
-	o = { "ὂ", "ö", "ọ" },
-	p = { "ṕ", "pἷ", "pề", "ῤ" },
-	q = { "qִ", },
-	r = { "ṛ", "rִ", "ґ" },
-	s = { "ş", "şִ", "şִִִ", "ş︭", "ş︤", "şִ", "şִִ", "ş์", "ร", "ş̇" },
-	t = { "ṭ", "tִ", "ṭ︭", "ṭ︤", "tส", "т" },
-	u = { "ǘ", "ú", "ü", "ų", "บ" },
-	v = { "vִ", "v͟" },
-	w = { "ẅ", "ฬ", "ฬִ" },
-	x = { "χ", "ҳ" },
-	y = { "ÿ", "ý" },
-	z = { "zִ", "ʐ", "ž" },
+-- Combined bypass dictionary
+Bypasser.bypassDictionary = {
+    ["test"] = "this word got patched. Please try bypassing a different word.",
+    ["fuck"] = "fมcׂׂׂᴋ︭",
+    ["shit"] = "şִִִĥִִִіִִִṭִִִ",
+    ["ass"] = "ḁִִִśִ︭︤śִִִ",
+    ["discord"] = "⌝dỈִִִธcorִִִd⌝",
+    ["nigga"] = "กἷֽꞡֽꞡֽαִִִ",
+    ["dick"] = "đִִִіִִִçִִִḳִִִ",
+    ["sex"] = "ธex",
+    ["dumbass"] = "đִִִǘִִִmִִִƀִִִąִִִşִִִşִִִ",
+    ["pussy"] = "ṕִǘִşִִִşִִִyִִִ",
+    ["cum"] = "cׂׂׂǘִִִmִִ",
+    ["penis"] = "ṕִִִėִִִņִִִіִִִşִִִ",
+    ["boobs"] = "ƀִִִὂִִִὂִִִƀִִִşִִִ",
+    ["bitch"] = "ƀִִִіִִṭִִִcׂׂׂĥִִִ",
+    ["asshole"] = "ąִִִşִִִşִִĥִִִὂִִִlִִִềִִִ",
+    ["cock"] = "cׂׂׂὂִִ︭cׂׂḳ",
+    ["bitches"] = "ƀִִִіִִִṭִִִcׂׂׂĥִִִềִִִşִִ",
+    ["booty"] = "ƀ︭︤ὂִִ︭ὂִִ︭ṭ︭︤ÿִ︭︤",
+    ["fuckass"] = "fมcׂׂׂᴋ︭aธธ",
+    -- Newly added words
+    ["molested"] = "mִִִὂִִִlִִִềִִִsִִִtִִִềִִd",
+    ["butthole"] = "bมttћὂlề",
+    ["sexy"] = "ธexγ",
+    ["rapist"] = "rִִִสัpἷִִִรtִ",
+    ["rape"] = "rสpề",
+    ["cunt"] = "ͼִִִมทt",
+    ["fucked"] = "ẝมͼִִִꞣִִִềִִִdִִִ",
+    ["fucker"] = "ẝมͼִִִꞣִִِềִִrִִִ",
+    ["dickhead"] = "dִִִiͼִִִꞣִִִћִִִềִִสd",
+    ["motherfucker"] = "mὂtћềrẝมͼꞣềr",
+    ["bullshit"] = "ḅִִִมlִִlรћit",
+    ["whore"] = "ẅִִִĥִִִὂִִִṛִִִềִִִ",
+    ["slutty"] = "รlมttִִִγִ",
+    ["slut"] = "รlมt",
+    ["porn"] = "ṕִִִὂִִִṛִִִňִִִ",
+    ["pornhub"] = "ṕִִִὂִִִṛִִִňִִĥִִִǘִִִƀִִ",
+    ["fucking"] = "ẝมͼִִִꞣִִִἷִִญทǥִִí",
+    ["retarded"] = "rִִِềtสrdềdִִ",
+    ["retard"] = "rִềִִִtสัrdִִί",
+    ["faggot"] = "ẝสǥǥὂִִtִִิ",
+    ["jackass"] = "jaִִִcׂꞣaธธ",
+    ["piss"] = "ṕִִִėִִִņִִִіִִִşִִִ",
 }
 
--- Homoglyphen ersetzen, ohne Zero-Width
 function Bypasser.bypassText(text: string): string
-	local newText = {}
-
-	for c in text:gmatch(".") do
-		local lower = string.lower(c)
-		if charSubstitutions[lower] then
-			local subs = charSubstitutions[lower]
-			local picked = subs[math.random(1, #subs)]
-			if c == string.upper(c) then
-				table.insert(newText, string.upper(picked))
-			else
-				table.insert(newText, picked)
-			end
-		else
-			table.insert(newText, c)
-		end
-	end
-
-	return table.concat(newText)
+    local words = string.split(text, " ")
+    local result = {}
+    
+    for _, word in ipairs(words) do
+        local lowerWord = string.lower(word)
+        table.insert(result, Bypasser.bypassDictionary[lowerWord] or word)
+    end
+    
+    return table.concat(result, " ")
 end
 
--- Clipboard Support
 function Bypasser.copyToClipboard(text: string)
-	if setclipboard then
-		setclipboard(text)
-	end
+    if setclipboard then
+        setclipboard(text)
+    end
 end
 
 return Bypasser
