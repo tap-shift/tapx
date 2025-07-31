@@ -34,7 +34,7 @@ return {
     eb = {
         {
             key = "JordansKey", -- GIVEN TO JORDAN FOR PARTNERING
-            users = {"Stewie5129", "RayfieldRemake", "Player3"}
+            users = {"Stewie5129", "RayfieldRemake", "BobIsCoolerThanU9983"}
         },
         {
             key = "TAPX-EB-2222",
