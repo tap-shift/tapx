@@ -3,7 +3,7 @@ return {
         -- EB KEYS
         ["JordansKey"] = {type = "eb"},         -- @Jordan
         ["1234"] = {type = "eb"},
-        ["TAPX-EB-3333"] = {type = "eb"},
+        ["DevilIsSoCoolAndHotAndIwantTohaveTheBOMB"] = {type = "eb"},
         -- EU KEYS
         ["TAPX-EU-4444"] = {type = "eu"},
         ["TAPX-EU-5555"] = {type = "eu"},
@@ -41,8 +41,8 @@ return {
             users = {"NexusNeox6", "NexusNeox60", "NexusNeox63"}
         },
         {
-            key = "TAPX-EB-3333",
-            users = {"Player7", "Player8", "Player9"}
+            key = "DevilIsSoCoolAndHotAndIwantTohaveTheBOMB",
+            users = {"elxpeee", "LeoDeadRailsAlt", "Player9"}
         }
     },
     
