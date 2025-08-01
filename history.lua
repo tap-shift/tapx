@@ -1,4 +1,10 @@
 return function(frame)
+    -- Create history storage if it doesn't exist
+    if not _G.TapXHistory then
+        _G.TapXHistory = {}
+    end
+
+    -- UI Elements
     local historyLabel = Instance.new("TextLabel")
     historyLabel.Text = "HISTORY"
     historyLabel.Size = UDim2.new(1, -20, 0, 40)
@@ -22,18 +28,55 @@ return function(frame)
     historyLayout.Padding = UDim.new(0, 5)
     historyLayout.Parent = historyScroller
 
-    -- Example history item (you would populate this from saved data)
-    local exampleItem = Instance.new("TextLabel")
-    exampleItem.Text = "Example bypassed text"
-    exampleItem.Size = UDim2.new(1, 0, 0, 30)
-    exampleItem.TextColor3 = Color3.fromRGB(200, 200, 200)
-    exampleItem.TextSize = 14
-    exampleItem.Font = Enum.Font.Gotham
-    exampleItem.TextXAlignment = Enum.TextXAlignment.Left
-    exampleItem.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
-    exampleItem.Parent = historyScroller
+    -- Function to add new history items
+    local function addHistoryItem(text)
+        table.insert(_G.TapXHistory, 1, text)
+        if #_G.TapXHistory > 50 then
+            table.remove(_G.TapXHistory, 51)
+        end
+        refreshHistory()
+    end
 
-    local corner = Instance.new("UICorner")
-    corner.CornerRadius = UDim.new(0, 6)
-    corner.Parent = exampleItem
+    -- Function to refresh history display
+    local function refreshHistory()
+        for _, child in ipairs(historyScroller:GetChildren()) do
+            if child:IsA("Frame") then
+                child:Destroy()
+            end
+        end
+
+        for i, text in ipairs(_G.TapXHistory) do
+            local historyItem = Instance.new("Frame")
+            historyItem.Size = UDim2.new(1, 0, 0, 40)
+            historyItem.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+            historyItem.Parent = historyScroller
+
+            local corner = Instance.new("UICorner")
+            corner.CornerRadius = UDim.new(0, 6)
+            corner.Parent = historyItem
+
+            local textLabel = Instance.new("TextLabel")
+            textLabel.Text = text
+            textLabel.Size = UDim2.new(1, -20, 1, 0)
+            textLabel.Position = UDim2.new(0, 10, 0, 0)
+            textLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+            textLabel.TextSize = 14
+            textLabel.Font = Enum.Font.Gotham
+            textLabel.TextXAlignment = Enum.TextXAlignment.Left
+            textLabel.TextYAlignment = Enum.TextYAlignment.Center
+            textLabel.TextWrapped = true
+            textLabel.BackgroundTransparency = 1
+            textLabel.Parent = historyItem
+        end
+    end
+
+    -- Connect to bypasser to receive new bypassed text
+    if _G.TapXBypasser then
+        _G.TapXBypasser.OnNewBypass:Connect(function(bypassedText)
+            addHistoryItem(bypassedText)
+        end)
+    end
+
+    -- Display existing history
+    refreshHistory()
 end
