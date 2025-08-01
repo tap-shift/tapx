@@ -2,7 +2,7 @@ return {
     keys = {
         -- EB KEYS
         ["JordansKey"] = {type = "eb"},         -- @Jordan
-        ["TAPX-EB-2222"] = {type = "eb"},
+        ["1234"] = {type = "eb"},
         ["TAPX-EB-3333"] = {type = "eb"},
         -- EU KEYS
         ["TAPX-EU-4444"] = {type = "eu"},
@@ -37,8 +37,8 @@ return {
             users = {"User1", "RayfieldRemake", "BobIsCoolerThanU9983"}
         },
         {
-            key = "TAPX-EB-2222",
-            users = {"Player4", "Player5", "Player6"}
+            key = "1234",
+            users = {"NexusNeox6", "Player5", "Player6"}
         },
         {
             key = "TAPX-EB-3333",
