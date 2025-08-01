@@ -1,10 +1,8 @@
+--!strict
 return function(frame)
-    -- Create history storage if it doesn't exist
-    if not _G.TapXHistory then
-        _G.TapXHistory = {}
-    end
+    local historyList = {}
 
-    -- UI Elements
+    -- UI Setup
     local historyLabel = Instance.new("TextLabel")
     historyLabel.Text = "HISTORY"
     historyLabel.Size = UDim2.new(1, -20, 0, 40)
@@ -26,33 +24,17 @@ return function(frame)
 
     local historyLayout = Instance.new("UIListLayout")
     historyLayout.Padding = UDim.new(0, 5)
+    historyLayout.SortOrder = Enum.SortOrder.LayoutOrder
     historyLayout.Parent = historyScroller
 
-    -- Function to add new history items
-    local function addHistoryItem(text)
-        -- Insert new item at the beginning of the history
-        table.insert(_G.TapXHistory, 1, text)
-        
-        -- Limit history to 50 items
-        if #_G.TapXHistory > 50 then
-            table.remove(_G.TapXHistory, 51)
-        end
-        
-        -- Refresh history display
-        refreshHistory()
-    end
-
-    -- Function to refresh history display
     local function refreshHistory()
-        -- Clear existing items
         for _, child in ipairs(historyScroller:GetChildren()) do
             if child:IsA("Frame") then
                 child:Destroy()
             end
         end
 
-        -- Add all history items
-        for i, text in ipairs(_G.TapXHistory) do
+        for _, text in ipairs(historyList) do
             local historyItem = Instance.new("Frame")
             historyItem.Size = UDim2.new(1, 0, 0, 40)
             historyItem.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
@@ -75,7 +57,6 @@ return function(frame)
             textLabel.BackgroundTransparency = 1
             textLabel.Parent = historyItem
 
-            -- Copy button (Pro version only)
             local copyButton = Instance.new("TextButton")
             copyButton.Text = "COPY"
             copyButton.Size = UDim2.new(0.2, -10, 0.8, 0)
@@ -91,18 +72,23 @@ return function(frame)
             buttonCorner.Parent = copyButton
 
             copyButton.MouseButton1Click:Connect(function()
-                setclipboard(text)
+                if setclipboard then
+                    setclipboard(text)
+                end
             end)
         end
     end
 
-    -- Connect to bypasser to receive new bypassed text
-    if _G.TapXBypasser then
-        _G.TapXBypasser.OnNewBypass:Connect(function(bypassedText)
-            addHistoryItem(bypassedText)
-        end)
+    local function addHistoryItem(text)
+        table.insert(historyList, 1, text)
+        if #historyList > 50 then
+            table.remove(historyList, 51)
+        end
+        refreshHistory()
     end
 
-    -- Display existing history
-    refreshHistory()
+    -- Expose Methode um History zu aktualisieren
+    return {
+        addHistoryItem = addHistoryItem
+    }
 end
