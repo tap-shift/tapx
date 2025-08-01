@@ -1,7 +1,6 @@
 --!strict
 local Bypasser = {}
 
--- Combined bypass dictionary
 Bypasser.bypassDictionary = {
     ["test"] = "this word got patched. Please try bypassing a different word.",
     ["fuck"] = "fมcׂׂׂᴋ︭",
@@ -22,7 +21,6 @@ Bypasser.bypassDictionary = {
     ["bitches"] = "ƀִִִіִִִṭִִִcׂׂׂĥִִִềִִִşִִ",
     ["booty"] = "ƀ︭︤ὂִִ︭ὂִִ︭ṭ︭︤ÿִ︭︤",
     ["fuckass"] = "fมcׂׂׂᴋ︭aธธ",
-    -- Newly added words
     ["molested"] = "mִִִὂִִִlִִִềִִִsִִִtִִִềִִd",
     ["butthole"] = "bมttћὂlề",
     ["sexy"] = "ธexγ",
@@ -47,6 +45,9 @@ Bypasser.bypassDictionary = {
     ["piss"] = "ṕִִִėִִִņִִִіִִִşִִִ",
 }
 
+-- Callback, das gesetzt werden kann, wenn Text gebypasst wurde
+Bypasser.OnBypassCallback = nil
+
 function Bypasser.bypassText(text: string): string
     local words = string.split(text, " ")
     local result = {}
@@ -58,23 +59,12 @@ function Bypasser.bypassText(text: string): string
 
     local bypassed = table.concat(result, " ")
 
-    -- Fire event if available
-    if _G.TapXBypasser and _G.TapXBypasser.OnNewBypass then
-        _G.TapXBypasser.OnNewBypass:Fire(bypassed)
+    -- Callback aufrufen, wenn gesetzt
+    if Bypasser.OnBypassCallback then
+        Bypasser.OnBypassCallback(bypassed)
     end
 
     return bypassed
 end
-
-function Bypasser.copyToClipboard(text: string)
-    if setclipboard then
-        setclipboard(text)
-    end
-end
-
--- Global TapXBypasser init
-_G.TapXBypasser = _G.TapXBypasser or {
-    OnNewBypass = Instance.new("BindableEvent")
-}
 
 return Bypasser
