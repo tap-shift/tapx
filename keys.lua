@@ -2,7 +2,7 @@ return {
     keys = {
         -- EB KEYS
         ["JordansKey"] = {type = "eb"},         -- @Jordan
-        ["1234"] = {type = "eb"},
+        ["1234"] = {type = "eb"},               -- @MrNexusBoi
         ["DevilIsSoCoolAndHotAndIwantTohaveTheBOMB"] = {type = "eb"},
         -- EU KEYS
         ["TAPX-EU-4444"] = {type = "eu"},
@@ -37,11 +37,11 @@ return {
             users = {"User1", "RayfieldRemake", "BobIsCoolerThanU9983"}
         },
         {
-            key = "1234",
+            key = "1234",       -- GIVEN TO MrNexusBoi FOR PARTNERING
             users = {"NexusNeox6", "NexusNeox60", "NexusNeox63"}
         },
-        {
-            key = "DevilIsSoCoolAndHotAndIwantTohaveTheBOMB",
+        {                    
+            key = "DevilIsSoCoolAndHotAndIwantTohaveTheBOMB", -- GIVEN TO DEVIL FOR PARTNERING
             users = {"elxpeee", "LeoDeadRailsAlt", "Player9"}
         }
     },
