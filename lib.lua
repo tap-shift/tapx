@@ -50,13 +50,20 @@ Bypasser.bypassDictionary = {
 function Bypasser.bypassText(text: string): string
     local words = string.split(text, " ")
     local result = {}
-    
+
     for _, word in ipairs(words) do
         local lowerWord = string.lower(word)
         table.insert(result, Bypasser.bypassDictionary[lowerWord] or word)
     end
-    
-    return table.concat(result, " ")
+
+    local bypassed = table.concat(result, " ")
+
+    -- Fire event if available
+    if _G.TapXBypasser and _G.TapXBypasser.OnNewBypass then
+        _G.TapXBypasser.OnNewBypass:Fire(bypassed)
+    end
+
+    return bypassed
 end
 
 function Bypasser.copyToClipboard(text: string)
@@ -64,5 +71,10 @@ function Bypasser.copyToClipboard(text: string)
         setclipboard(text)
     end
 end
+
+-- Global TapXBypasser init
+_G.TapXBypasser = _G.TapXBypasser or {
+    OnNewBypass = Instance.new("BindableEvent")
+}
 
 return Bypasser
