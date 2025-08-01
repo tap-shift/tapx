@@ -38,7 +38,7 @@ return {
         },
         {
             key = "1234",
-            users = {"NexusNeox6", "NexusNeox60", "Player6"}
+            users = {"NexusNeox6", "NexusNeox60", "NexusNeox63"}
         },
         {
             key = "TAPX-EB-3333",
