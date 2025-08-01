@@ -10,8 +10,8 @@ return {
         ["TAPX-EU-6666"] = {type = "eu"},
         -- PRO KEYS
         ["Numbers"] = {type = "pro"},           -- @Ixv_x
-        ["dev1"] = {type = "pro"},
-        ["dev2"] = {type = "pro"}
+        ["dev1"] = {type = "pro"},              -- @tapshift  DEV1
+        ["dev2"] = {type = "pro"}               -- @sgmxyc    DEV2
     },
     
     -- Pro keys data
